@@ -6,9 +6,11 @@ class Department(Document):
     departmentAbbreviation = EnumField(DepartmentBuilding, db_field='department_abbreviation', max_length=6, required=True)
     departmentChairName = StringField(db_field='department_chair_name', max_length=80, required=True)
     departmentBuilding = StringField(db_field='department_building', max_length = 10, required=True)
-    departmentOffice = StringField(db_field='department_office', required=True)
+    departmentOffice = IntField(db_field='department_office', required=True)
     departmentDescription = StringField(db_field='department_description', max_length=80, required=True)
-    #TODO Add majors and courses connections
+
+    majors = ListField(ReferenceField('Major'))
+    courses = ListField(ReferenceField('Course'))
 
     meta = {'collection': 'departments',
             'indexes': [
