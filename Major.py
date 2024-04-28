@@ -1,6 +1,6 @@
 from mongoengine import *
 from datetime import datetime
-#from Department import Department
+from Department import Department
 
 class Major(Document):
     """
@@ -10,7 +10,7 @@ class Major(Document):
     majorDescription = StringField(db_field='major_description',max_length=800,required=True)
     
     ## FIXME: reference to Department ##
-    department = ReferenceField(Department, required=True, reverse_delete_rule=DENY)
+    department = ReferenceField(Department, required=True, reverse_delete_rule=CASCADE)
 
     meta = { 'collection': 'majors',
              'indexes': [

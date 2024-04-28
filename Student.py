@@ -11,7 +11,7 @@ class Student(Document):
     studentMajor = EmbeddedDocumentListField(StudentMajor,db_field='student_major')
     
     ## FIXME: reference to Enrollment ##
-    
+     
 
     meta = {'collection': 'students',
             'indexes': [
