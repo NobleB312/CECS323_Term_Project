@@ -2,6 +2,7 @@ from mongoengine import *
 from datetime import datetime
 from Major import Major
 from StudentMajor import StudentMajor
+from Enrollment import Enrollment
 
 class Student(Document):
     """"""
@@ -11,6 +12,7 @@ class Student(Document):
     studentMajor = EmbeddedDocumentListField(StudentMajor,db_field='student_major')
     
     ## FIXME: reference to Enrollment ##
+    #enrollments = ListField(ReferenceField('Enrollment'))
      
 
     meta = {'collection': 'students',
@@ -28,7 +30,7 @@ class Student(Document):
         self.eMail = eMail
 
     def __str__(self):
-        results = f'Student: {lastName}, {firstName} Email: {eMail}'
+        results = f'Student: {self.lastName}, {self.firstName} Email: {self.eMail}'
         for declaredmajor in self.studentMajor:
             results += '\n\t' + f"declared Major: {declaredmajor.major} on {declaredmajor.declarationDate}"
         return results
