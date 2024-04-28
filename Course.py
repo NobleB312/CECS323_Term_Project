@@ -2,18 +2,6 @@ import mongoengine
 from mongoengine import *
 from Department import Department
 
-'''
-c. Course
-
-    c. Course
-        i. {departmentAbbreviation, courseNumber} – Note that you can use
-        departmentName instead of departmentAbbreviation if you choose to "migrate"
-        that into Course.
-        ii. {departmentAbbreviation, courseName}
-
-    i. units must be no less than 1 and no greater than 5.
-    ii. courseNumber must be >= 100 and < 700
-'''
 class Course(Document):
     courseNumber = IntField(db_field='course_number', min_value=100, max_value=700, required=True)
     courseName = StringField(db_field='course_name', required=True)
