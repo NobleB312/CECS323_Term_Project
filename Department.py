@@ -1,22 +1,6 @@
 from mongoengine import *
 from DepartmentBuilding import DepartmentBuilding
-'''
-Constrtaints
 
-{name}
-ii. {abbreviation}
-iii. {chairName}
-iv. {building, office}
-
-Abbreviation must be six characters or less.
-    ii. chairName must be 80 characters or less.
-    iii. building name must be 10 characters or less.
-        1. It was pointed out to me that the IN constraint that I have on building
-           (see below) means that you do not have to worry about the length of the
-           building name getting out of hand.
-    iv. description must be 80 characters or less.
-    v. Building IN ('ANAC', 'CDC', 'DC', 'ECS', 'EN2', 'EN3', 'EN4', 'EN5', 'ET', 'HSCI', 'NUR','VEC')
-'''
 class Department(Document):
     departmentName = StringField(db_field='department_name', required=True)
     departmentAbbreviation = EnumField(DepartmentBuilding, db_field='department_abbreviation', max_length=6, required=True)
