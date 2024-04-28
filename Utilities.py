@@ -15,14 +15,14 @@ class Utilities:
 
     @staticmethod
     def startup():
-        print("Prompting for the password.")
+        print("Connecting to the MongoDB database...")
         while True:
             username = MongoCredentials.username
             password = MongoCredentials.password
             project = MongoCredentials.project
             hash_name = MongoCredentials.hash_name
             cluster = f"mongodb+srv://{username}:{password}@{project}.{hash_name}.mongodb.net/?retryWrites=true&w=majority"
-            database_name = input('Database name to use --> ')
+            database_name = 'final_project'
             client = connect(db=database_name, host=cluster)
             try:
                 junk = client.server_info()  # Test the connection
