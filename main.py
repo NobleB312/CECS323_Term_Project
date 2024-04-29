@@ -85,7 +85,7 @@ def add_course():
         except NotUniqueError as nue:
             print('Error: The course violates one or more uniqueness constraints. Please enter unique values.')
 
-# Function to delete a course
+#function to delete a course
 def delete_course(course_id):
     try:
         #find the course by its ID and delete it
