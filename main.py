@@ -21,9 +21,6 @@ if __name__ == '__main__':
 
 #add, delete for all objects
 def menu_loop(menu: Menu):
-    """Little helper routine to just keep cycling in a menu until the user signals that they
-    want to exit.
-    :param  menu:   The menu that the user will see."""
     action: str = ''
     while action != menu.last_action():
         action = menu.menu_prompt()
@@ -45,3 +42,4 @@ def delete():
 
 def update():
     menu_loop(update_select)
+
