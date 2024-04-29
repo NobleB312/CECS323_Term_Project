@@ -15,7 +15,7 @@ class Course(Document):
     meta = {'collection': 'courses',
             'indexes':[
                 {'unique': True, 'fields': ['department.departmentName', 'courseNumber'], 'name': 'courses_uk_01'},
-                {'unique': True, 'fields': ['department.departmentName', 'courseName'], 'name': 'courses_uk_01'}
+                {'unique': True, 'fields': ['department.departmentName', 'courseName'], 'name': 'courses_uk_02'}
             ]}
 
     def __init__(self, department, courseNumber, courseName, courseDescription, courseUnits, *args, **kwargs):
