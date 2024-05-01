@@ -13,7 +13,7 @@ menu_main = Menu('main', 'Please select one of the following options:', [
 # options for adding a new instance
 add_select = Menu('add select', 'Which type of object do you want to add?:', [
     # Option("Department", "add_department(db)"),
-    # Option("Course", "add_course(db)"),
+    Option("Course", "add_course(db)"),
     # Option("Major", "add_major(db)"),
     # Option("Student", "add_student(db)"),
     # Option("Section", "add_section(db)"),
@@ -26,7 +26,7 @@ add_select = Menu('add select', 'Which type of object do you want to add?:', [
 # options for deleting an existing instance
 delete_select = Menu('delete select', 'Which type of object do you want to delete?:', [
     # Option("Department", "delete_department(db)"),
-    # Option("Course", "delete_course(db)"),
+    Option("Course", "delete_course(db)"),
     # Option("Major", "delete_major(db)"),
     # Option("Student", "delete_student(db)"),
     # Option("Section", "delete_section(db)"),
@@ -39,7 +39,7 @@ delete_select = Menu('delete select', 'Which type of object do you want to delet
 # options for testing the select functions
 select_select = Menu('select select', 'Which type of object do you want to select:', [
     # Option("Department", "print(select_department(db))"),
-    # Option("Course", "print(select_course(db))"),
+    Option("Course", "print(select_course(db))"),
     # Option("Major", "print(select_major(db))"),
     # Option("Student", "print(select_student(db))"),
     # Option("Section", "print(select_section(db))"),

@@ -1,3 +1,5 @@
+from mongoengine import *
+from ConstraintUtilities import *
 from Utilities import Utilities
 from Department import Department
 from Course import Course
@@ -7,14 +9,7 @@ from Option import Option
 from menu_definitions import menu_main, add_select, select_select, delete_select, update_select
 
 
-if __name__ == '__main__':
-    print('Starting in main.')
-    db = Utilities.startup()
-    main_action: str = ''
-    while main_action != menu_main.last_action():
-        main_action = menu_main.menu_prompt()
-        print('next action: ', main_action)
-        exec(main_action)
+
 
 
 #add, delete for all objects
@@ -81,12 +76,25 @@ def add_course():
         except NotUniqueError as nue:
             print('Error: The course violates one or more uniqueness constraints. Please enter unique values.')
 
+def select_course():
+    return select_general(Course)
+
 #function to delete a course
-def delete_course(course_id):
+def delete_course():
     try:
         #find the course by its ID and delete it
-        course = Course.objects(id=course_id).get()
+        course = select_course()
         course.delete()
-        print(f'Deleted course with ID {course_id}')
+        print(f'Deleted course: {course}')
     except Exception as e:
         print(f'Error deleting course: {e}')
+
+
+if __name__ == '__main__':
+    print('Starting in main.')
+    db = Utilities.startup()
+    main_action: str = ''
+    while main_action != menu_main.last_action():
+        main_action = menu_main.menu_prompt()
+        print('next action: ', main_action)
+        exec(main_action)
