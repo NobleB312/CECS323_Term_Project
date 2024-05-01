@@ -8,7 +8,7 @@ from menu_definitions import delete_menu
 from menu_definitions import list_menu
 from Menu import Menu
 from Option import Option
-from menu_definitions import menu_main, add_select, select_select, delete_select, update_select
+from menu_definitions import menu_main
 
 
 if __name__ == '__main__':
