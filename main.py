@@ -1,8 +1,14 @@
 from mongoengine import *
+
 from ConstraintUtilities import *
 from Utilities import Utilities
 from Department import Department
 from Course import Course
+from Major import Major
+from Student import Student
+from Section import Section
+from StudentMajor import StudentMajor
+from Enrollment import Enrollment
 from pymongo import monitoring
 from Menu import Menu
 from Option import Option
@@ -41,6 +47,34 @@ def update():
     menu_loop(update_select)
 
 
+def select_department():
+    return select_general(Department)
+
+
+def select_course():
+    return select_general(Course)
+
+
+def select_major():
+    return select_general(Major)
+
+
+def select_student():
+    return select_general(Student)
+
+
+def select_section():
+    return select_general(Section)
+
+
+def select_student_major():
+    return select_general(StudentMajor)
+
+
+def select_enrollment():
+    return select_general(Enrollment)
+
+
 def add_course():
     """
     Create a new Course instance.
@@ -76,8 +110,6 @@ def add_course():
         except NotUniqueError as nue:
             print('Error: The course violates one or more uniqueness constraints. Please enter unique values.')
 
-def select_course():
-    return select_general(Course)
 
 #function to delete a course
 def delete_course():

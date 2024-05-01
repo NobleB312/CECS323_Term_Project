@@ -12,39 +12,39 @@ menu_main = Menu('main', 'Please select one of the following options:', [
 
 # options for adding a new instance
 add_select = Menu('add select', 'Which type of object do you want to add?:', [
-    # Option("Department", "add_department(db)"),
-    Option("Course", "add_course(db)"),
-    # Option("Major", "add_major(db)"),
-    # Option("Student", "add_student(db)"),
-    # Option("Section", "add_section(db)"),
-    # Option("Enrollment", "add_enrollment(db)"),
-    # Option("Student to Major", "add_student_major(db)"),
-    # Option("Major to Student", "add_major_student(db)"),
+    # Option("Department", "add_department()"),
+    Option("Course", "add_course()"),
+    # Option("Major", "add_major()"),
+    # Option("Student", "add_student()"),
+    # Option("Section", "add_section()"),
+    # Option("Enrollment", "add_enrollment()"),
+    # Option("Student to Major", "add_student_major()"),
+    # Option("Major to Student", "add_major_student()"),
     Option("Exit", "pass")
 ])
 
 # options for deleting an existing instance
 delete_select = Menu('delete select', 'Which type of object do you want to delete?:', [
-    # Option("Department", "delete_department(db)"),
-    Option("Course", "delete_course(db)"),
-    # Option("Major", "delete_major(db)"),
-    # Option("Student", "delete_student(db)"),
-    # Option("Section", "delete_section(db)"),
-    # Option("Enrollment", "delete_enrollment(db)"),
-    # Option("Student to Major", "delete_student_major(db)"),
-    # Option("Major to Student", "delete_major_student(db)"),
+    # Option("Department", "delete_department()"),
+    Option("Course", "delete_course()"),
+    # Option("Major", "delete_major()"),
+    # Option("Student", "delete_student()"),
+    # Option("Section", "delete_section()"),
+    # Option("Enrollment", "delete_enrollment()"),
+    # Option("Student to Major", "delete_student_major()"),
+    # Option("Major to Student", "delete_major_student()"),
     Option("Exit", "pass")
 ])
 
 # options for testing the select functions
 select_select = Menu('select select', 'Which type of object do you want to select:', [
-    # Option("Department", "print(select_department(db))"),
-    Option("Course", "print(select_course(db))"),
-    # Option("Major", "print(select_major(db))"),
-    # Option("Student", "print(select_student(db))"),
-    # Option("Section", "print(select_section(db))"),
-    # Option("Enrollment", "print(select_enrollment(db))"),
-    # Option("Student Major", "print(select_student_major(db))"),
+    Option("Department", "print(select_department())"),
+    Option("Course", "print(select_course())"),
+    Option("Major", "print(select_major())"),
+    Option("Student", "print(select_student())"),
+    Option("Section", "print(select_section())"),
+    Option("Enrollment", "print(select_enrollment())"),
+    Option("Student Major", "print(select_student_major())"),
     Option("Exit", "pass")
 ])
 
