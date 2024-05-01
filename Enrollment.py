@@ -10,6 +10,16 @@ class Enrollment(Document):
     enrollmentDetails = EmbeddedDocumentField(EnrollmentDetails, db_field='enrollment_details')
 
     # TODO: add the add methods for enrollment details
+    # Singleton design pattern for EnrollmentDetails embedded object
+    def enrollmentDetailsInstance(self):
+        if not self.enrollmentDetails:
+            self.enrollmentDetails = EnrollmentDetails()
+
+    # If there are no more enrollment details, clear the field
+    def cleanEnrollmentDetailsInstance(self):
+        print()
+        #TODO: fix.
+
     def __init__(self, student, section, *args, **values):
         super().__init__(*args, **values)
         self.student = student
