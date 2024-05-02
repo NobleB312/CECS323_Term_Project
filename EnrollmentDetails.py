@@ -11,17 +11,17 @@ class EnrollmentDetails(EmbeddedDocument):
     minSatisfactoryGrade = EnumField(PassingLetterGrade, db_field='min_satisfactory_grade')
     incRecoveryPlan = StringField(db_field='inc_recovery_plan')
 
-    def setLetterGrade(self, letterGrade: LetterGrade):
-        self.letterGrade = letterGrade
+    def set_letter_grade(self, letter_grade: LetterGrade):
+        self.letterGrade = letter_grade
 
-    def setPassFailApplicationDate(self, passFailApplicationDate: datetime):
-        self.passFailApplicationDate = passFailApplicationDate
+    def set_pass_fail_application_date(self, pass_fail_application_date: datetime):
+        self.passFailApplicationDate = pass_fail_application_date
 
-    def setMinSatisfactoryGrade(self, minSatisfactoryGrade: PassingLetterGrade):
-        self.minSatisfactoryGrade = minSatisfactoryGrade
+    def set_min_satisfactory_grade(self, min_satisfactory_grade: PassingLetterGrade):
+        self.minSatisfactoryGrade = min_satisfactory_grade
 
-    def setIncRecoveryPlan(self, incRecoveryPlan: str):
-        self.incRecoveryPlan = incRecoveryPlan
+    def set_inc_recovery_plan(self, inc_recovery_plan: str):
+        self.incRecoveryPlan = inc_recovery_plan
 
     # don't allow Pass/Fail application date to be in the future
     def clean(self):
