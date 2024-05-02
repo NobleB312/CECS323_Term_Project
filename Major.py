@@ -12,10 +12,9 @@ class Major(Document):
     ## FIXME: reference to Department ##
     department = ReferenceField(Department, required=True, reverse_delete_rule=CASCADE)
 
-    meta = { 'collection': 'majors',
-             'indexes': [
-                {'unique': True, 'fields': ['majorName'], 'name': 'majors_uk_1'},
-                {'unique': True, 'fields': ['majorDescription'], 'name': 'majors_uk_2'}
+    meta = {'collection': 'majors',
+            'indexes': [
+                {'unique': True, 'fields': ['majorName'], 'name': 'majors_uk_1'}
              ]}
 
     def __init__(self, majorName: str, majorDescription: str, *args, **values):
@@ -26,7 +25,3 @@ class Major(Document):
     def __str__(self):
         results = f'Major: {self.majorName}: {self.description}'
 
-## FIXME ##
-    def get_department(self):
-        """:return:        identity of the major's department."""
-        return self.department
