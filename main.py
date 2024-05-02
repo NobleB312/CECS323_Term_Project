@@ -98,7 +98,6 @@ def add_department():
             )
             
             new_department.save()
-            print(f'Successfully added department: {new_department.departmentName}')
             success = True
 
         except Exception as e:
@@ -134,7 +133,6 @@ def add_course():
             
             #attempt to save the new course to the database
             new_course.save()
-            print(f'Successfully added course: {new_course}')
             success = True
 
         except NotUniqueError as nue:
