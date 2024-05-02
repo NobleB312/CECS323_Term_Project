@@ -74,6 +74,7 @@ def select_student_major():
 def select_enrollment():
     return select_general(Enrollment)
 
+
 def add_department():
     """
     Create a new Department instance.
@@ -98,7 +99,6 @@ def add_department():
             )
             
             new_department.save()
-            print(f'Successfully added department: {new_department.departmentName}')
             success = True
 
         except Exception as e:
@@ -134,11 +134,10 @@ def add_course():
             
             #attempt to save the new course to the database
             new_course.save()
-            print(f'Successfully added course: {new_course}')
             success = True
 
-        except NotUniqueError as nue:
-            print('Error: The course violates one or more uniqueness constraints. Please enter unique values.')
+        except Exception as e:
+            Utilities.print_exception(e)
 
 
 # def add_major():
@@ -161,7 +160,6 @@ def add_course():
 #             )
             
 #             new_major.save()
-#             print(f'Successfully added major: {new_major.majorName}')
 #             success = True
 
 #         except Exception as e:
