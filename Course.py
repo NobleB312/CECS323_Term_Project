@@ -9,19 +9,21 @@ class Course(Document):
     courseUnits = IntField(db_field='course_units', min_value=1, max_value=5, required=True)
 
     department = ReferenceField(Department, required=True, reverse_delete_rule=mongoengine.CASCADE)
+    departmentName = StringField()
 
     sections = ListField(ReferenceField('Section'))
     # TODO: fix these uniqueness constraint using clean()
-    '''
+
     meta = {'collection': 'courses',
-            'indexes':[
-                {'unique': True, 'fields': ['department.departmentName', 'courseNumber'], 'name': 'courses_uk_01'},
-                {'unique': True, 'fields': ['department.departmentName', 'courseName'], 'name': 'courses_uk_02'}
+            'indexes': [
+                {'unique': True, 'fields': ['departmentName', 'courseNumber'], 'name': 'courses_uk_01'},
+                {'unique': True, 'fields': ['departmentName', 'courseName'], 'name': 'courses_uk_02'}
             ]}
-    '''
+
     def __init__(self, department, courseNumber, courseName, courseDescription, courseUnits, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.department = department
+        self.departmentName = department.departmentName
         self.courseNumber = courseNumber
         self.courseName = courseName
         self.courseDescription = courseDescription
