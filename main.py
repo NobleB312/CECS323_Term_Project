@@ -74,7 +74,6 @@ def select_student_major():
 def select_enrollment():
     return select_general(Enrollment)
 
-
 def add_department():
     """
     Create a new Department instance.
@@ -99,6 +98,7 @@ def add_department():
             )
             
             new_department.save()
+            print(f'Successfully added department: {new_department.departmentName}')
             success = True
 
         except Exception as e:
@@ -113,11 +113,7 @@ def add_course():
     new_course = None
     while not success:
         try:
-            department_name = prompt_for_input('Enter the department name: ')
-            department = Department.objects(departmentName=department_name).first()
-            if not department:
-                print("Department not found.")
-
+            department = select_department()
             course_number = int(prompt_for_input('Enter the course number: '))
             course_name = prompt_for_input('Enter the course name: ')
             course_description = prompt_for_input('Enter the course description: ')
@@ -134,6 +130,7 @@ def add_course():
             
             #attempt to save the new course to the database
             new_course.save()
+            print(f'Successfully added course: {new_course}')
             success = True
 
         except Exception as e:
@@ -149,19 +146,20 @@ def add_course():
 #         try:
 #             major_name = prompt_for_input('Enter the major name (up to 20 characters): ')
 #             major_description = prompt_for_input('Enter the major description (up to 800 characters): ')
-            
+#
 #             department_name = prompt_for_input('Enter the department name: ')
 #             department = Department.objects.get(departmentName=department_name)
-
+#
 #             new_major = Major(
 #                 majorName=major_name,
 #                 majorDescription=major_description,
 #                 department=department
 #             )
-            
+#
 #             new_major.save()
+#             print(f'Successfully added major: {new_major.majorName}')
 #             success = True
-
+#
 #         except Exception as e:
 #             print(f'An error occurred: {e}')
 
