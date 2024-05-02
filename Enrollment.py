@@ -1,6 +1,9 @@
 import mongoengine
 from mongoengine import *
+
+from DepartmentBuilding import DepartmentBuilding
 from Section import Section
+from Semester import Semester
 from Student import Student
 from EnrollmentDetails import EnrollmentDetails
 
@@ -8,6 +11,12 @@ from EnrollmentDetails import EnrollmentDetails
 class Enrollment(Document):
     student = ReferenceField(Student, required=True, reverse_delete_rule=mongoengine.CASCADE)
     section = ReferenceField(Section, required=True, reverse_delete_rule=mongoengine.CASCADE)
+    semester = EnumField(Semester, db_field='semester')
+    sectionYear = IntField(db_field='section_year')
+    departmentAbbreviation = EnumField(DepartmentBuilding, db_field='department_abbreviation')
+    courseNumber = IntField(db_field='course_number')
+
+
 
     # DESIGN CHANGE - enrollmentDetails must be non-nullable due to complete inheritance for minSatisfactory and P/NP
     enrollmentDetails = EmbeddedDocumentField(EnrollmentDetails, db_field='enrollment_details', required=True)
@@ -48,11 +57,22 @@ class Enrollment(Document):
             del self.enrollmentDetails.minSatisfactoryGrade
         self.enrollmentDetails.set_pass_fail_application_date(pass_fail_application_date)
 
+    meta = {'collection': 'enrollments',
+            'indexes': [
+                {'unique': True, 'fields': ['student', 'section'], 'name': 'enrollments_uk_01'},
+                {'unique': True, 'fields': ['semester', 'sectionYear', 'departmentAbbreviation', 'courseNumber',
+                                            'student'], 'name': 'enrollments_uk_02'}
+            ]}
+
     def __init__(self, student, section, *args, **values):
         super().__init__(*args, **values)
         self.student = student
         self.section = section
         self.enrollmentDetails = EnrollmentDetails()
+        self.semester = self.section.semester
+        self.sectionYear = self.section.sectionYear
+        self.departmentAbbreviation = self.section.course.department.departmentAbbreviation
+        self.courseNumber = self.section.course.courseNumber
 
     def __str__(self):
         return f"Enrollment:\n  {self.section.semester} {self.section.sectionYear} " \

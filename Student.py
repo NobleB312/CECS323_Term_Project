@@ -9,8 +9,7 @@ class Student(Document):
     eMail = StringField(db_field='email', max_length=100, required=True)
     studentMajor = EmbeddedDocumentListField(StudentMajor,db_field='student_major')
     
-    ## FIXME: reference to Enrollment ##
-    #enrollments = ListField(ReferenceField('Enrollment'))
+    enrollments = ListField(ReferenceField('Enrollment'))
      
 
     meta = {'collection': 'students',
