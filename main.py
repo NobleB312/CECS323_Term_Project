@@ -161,7 +161,6 @@ def add_course():
 #             )
             
 #             new_major.save()
-#             print(f'Successfully added major: {new_major.majorName}')
 #             success = True
 
 #         except Exception as e:
