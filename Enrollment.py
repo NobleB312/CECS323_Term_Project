@@ -12,6 +12,17 @@ class Enrollment(Document):
     # DESIGN CHANGE - enrollmentDetails must be non-nullable due to complete inheritance for minSatisfactory and P/NP
     enrollmentDetails = EmbeddedDocumentField(EnrollmentDetails, db_field='enrollment_details', required=True)
 
+
+    '''
+    SINGLE TABLE LOGIC
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    incomplete recovery plan and letter grade: Incomplete disjoint. Since these are issued at the end of a student
+    being enrolled in a course, errors should be thrown if one is already set to a value and the other is attempting
+    to be added.
+    
+    minimum satisfactory grade and pass fail application date: Complete disjoint. Since a student is able to change 
+    their status to and from pass/fail until the two week deadline, one option should delete the instance of the other. 
+    '''
     # Add the add methods for enrollment details
     def add_inc_recovery_plan(self, recovery_plan):
         # disjoint from letter grade
@@ -22,13 +33,13 @@ class Enrollment(Document):
     def add_min_satisfactory_grade(self, min_satisfactory_grade):
         # disjoint from pass fail application date
         if self.enrollmentDetails.passFailApplicationDate:
-            raise ValidationError('This course is being taken as pass fail. No five letter grade will be received.')
+            del self.enrollmentDetails.passFailApplicationDate
         self.enrollmentDetails.set_min_satisfactory_grade(min_satisfactory_grade)
 
     def add_letter_grade(self, letter_grade):
         # disjoint from incomplete recovery plan
         if self.enrollmentDetails.incRecoveryPlan:
-            raise ValidationError('This class was incomplete. No leter grade received.')
+            raise ValidationError('This class was incomplete. No letter grade received.')
         self.enrollmentDetails.set_letter_grade(letter_grade)
 
     def add_pass_fail_application_date(self, pass_fail_application_date):

@@ -29,4 +29,4 @@ class StudentMajor(EmbeddedDocument):
         return self.major
 
     def __eq__(self, other):
-        return self.get_major().majorName == other.get_major().majorName
+        return self.major == other.get_major().majorName
