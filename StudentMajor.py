@@ -5,7 +5,7 @@ from Major import Major
 class StudentMajor(EmbeddedDocument):
 
     # string implementation
-    #major = StringField(db_field='major', max_length=20, required=True)
+    # major = StringField(db_field='major', max_length=20, required=True)
     major = ReferenceField(Major, required=True)
     declarationDate = DateTimeField(db_field='declaration_date', required=True)
     

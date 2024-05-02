@@ -1,8 +1,6 @@
 from mongoengine import *
 from datetime import datetime
-from Major import Major
 from StudentMajor import StudentMajor
-from Enrollment import Enrollment
 
 class Student(Document):
     """"""
@@ -51,8 +49,3 @@ class Student(Document):
             self.studentMajor.append(new_major)
         else:
             self.studentMajor = [new_major]
-
-    def get_current_major(self) -> Major:
-        if self.studentMajor:
-            return self.studentMajor[-1].major
-        return None
