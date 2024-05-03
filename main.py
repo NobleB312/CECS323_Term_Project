@@ -14,6 +14,7 @@ from Menu import Menu
 from Option import Option
 from menu_definitions import menu_main, add_select, select_select, delete_select, update_select
 import DepartmentBuilding
+from datetime import datetime
 
 
 def prompt_for_enum(prompt: str, cls, attribute_name: str):
@@ -108,12 +109,12 @@ def add_department():
             department_description = input('Enter the department description: ')
 
             new_department = Department(
-                department_name,
-                department_abbreviation,
-                department_chair_name,
-                department_building,
-                department_office,
-                department_description
+                departmentName=department_name,
+                departmentAbbreviation=department_abbreviation,
+                departmentChairName=department_chair_name,
+                departmentBuilding=department_building,
+                departmentOffice=department_office,
+                departmentDescription=department_description
             )
             
             new_department.save()
@@ -140,11 +141,11 @@ def add_course():
 
             #create new course instance
             new_course = Course(
-                department,
-                course_number,
-                course_name,
-                course_description,
-                course_units
+                department=department,
+                courseNumber=course_number,
+                courseName=course_name,
+                courseDescription=course_description,
+                courseUnits=course_units
             )
             
             #attempt to save the new course to the database
@@ -175,18 +176,28 @@ def add_section():
             building = prompt_for_enum('Select the building: ', Section, 'building')
             room = int(input('Enter the room number: '))
             schedule = prompt_for_enum('Select the building: ', Section, 'schedule')
-            start_time = prompt_for_date('Enter the start time:')
+            hour = int(input('Start time - enter the hour:'))
+            minute = int(input('Start time - enter the minute:'))
+            start_time = datetime(year=1, month=1, day=1, hour=hour, minute=minute)  # we just want the time; calendar date does not matter here.
             instructor = input('Enter the instructor for this section: ')
 
-            # create new course instance
-            new_section = Section(course, section_number, semester, section_year, building, room, schedule,
-                                  start_time, instructor)
+            new_section = Section(
+                course=course,
+                sectionNumber=section_number,
+                semester=semester,
+                sectionYear=section_year,
+                building=building,
+                room=room,
+                schedule=schedule,
+                startTime=start_time,
+                instructor=instructor
+            )
 
-            # attempt to save the new course to the database
             new_section.save()
 
             course.add_section(new_section)
             course.save()
+
             print(f'Successfully added section: {new_section}')
             success = True
 

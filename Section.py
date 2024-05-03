@@ -32,14 +32,15 @@ class Section(Document):
         hours = time_conversion.hour
         minutes = time_conversion.minute
         # Logic: before 8am OR after 8pm OR after 7:30pm. We extracted hours and minutes, so we need two cases for 7:30.
-        if hours < 8 or (hours > 20 or (hours > 19 and minutes > 30)):
-            raise ValidationError("Declaration date cannot be in the future")
+        if hours < 8 or hours >= 20 or (hours == 19 and minutes > 30):
+            raise ValidationError("Start time must be between 8am and 7:30pm")
+
 
     def __init__(self, course, sectionNumber, semester, sectionYear, building, room, schedule, startTime, instructor,
-                 *args, **values):
-        super().__init__(*args,**values)
+                 *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.course = course
-        self.sectionNumber = sectionNumber,
+        self.sectionNumber = sectionNumber
         self.semester = semester
         self.sectionYear = sectionYear
         self.building = building
