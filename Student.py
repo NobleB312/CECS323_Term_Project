@@ -7,7 +7,7 @@ class Student(Document):
     firstName = StringField(db_field='first_name', max_length=40, required=True)
     lastName = StringField(db_field='last_name', max_length=40, required=True)
     eMail = StringField(db_field='email', max_length=100, required=True)
-    studentMajor = EmbeddedDocumentListField(StudentMajor,db_field='student_major')
+    studentMajors = EmbeddedDocumentListField(StudentMajor, db_field='student_major')
     
 
     enrollments = ListField(ReferenceField('Enrollment'))
@@ -29,23 +29,44 @@ class Student(Document):
 
     def __str__(self):
         results = f'Student: {self.lastName}, {self.firstName} Email: {self.eMail}'
-        for declaredmajor in self.studentMajor:
-            results += '\n\t' + f"declared Major: {declaredmajor.major} on {declaredmajor.declarationDate}"
+        for declared_major in self.studentMajors:
+            results += '\n\t' + f"declared Major: {declared_major.major} on {declared_major.declarationDate}"
         return results
 
-    def add_major(self, new_major: StudentMajor):
+    def add_major(self, major):
+        if not self.studentMajors:
+            self.studentMajors = [major]
+            return
 
-        if self.studentMajor:
-            # adding constraints:
-            # student cannot declare major they previously declared.
-            # student can declare the same major at different time intervals; the assumption is that they dropped the major and returned, which realistically, is a very small chance of occurring multiple times.
-            current_major = self.studentMajor[-1]
-            if current_major == new_major:
-                raise ValueError('Student is already in that major.')
-            if current_major.declarationDate >= new_major.declarationDate:
-                raise ValueError('The major cannot be declared before the latest major declared.')
-            if new_major.declarationDate > datetime.utcnow():
-                raise ValueError('The major cannot be declared in the future.')
-            self.studentMajor.append(new_major)
-        else:
-            self.studentMajor = [new_major]
+        for existing_major in self.studentMajors:
+            if major.equals(existing_major):
+                raise Exception('Major is already declared.')
+
+        self.studentMajors.append(major)
+
+    def remove_major(self, major):
+        for existing_major in self.studentMajors:
+            if major.equals(existing_major):
+                self.studentMajors.remove(existing_major)
+                return
+        # if it reaches the end and doesn't remove, throw an exception
+        raise Exception('Major was never declared.')
+
+    def enroll_in_section(self, enrollment):
+        if not self.enrollments:
+            self.enrollments = [enrollment]
+            return
+
+        for already_enrolled_student in self.enrollments:
+            if enrollment.equals(already_enrolled_student):
+                raise Exception('Student is already enrolled in this section.')
+
+        self.enrollments.append(enrollment)
+
+    def unenroll_in_section(self, enrollment):
+        for already_enrolled_student in self.enrollments:
+            if enrollment.equals(already_enrolled_student):
+                self.enrollments.remove(already_enrolled_student)
+                return
+        # if it reaches the end and doesn't remove, throw an exception
+        raise Exception('Student is not Enrolled in this section.')

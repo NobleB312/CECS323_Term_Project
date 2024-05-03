@@ -52,3 +52,22 @@ class Section(Document):
                f"  Start Time - {self.startTime}\n" \
                f"  Instructor - {self.instructor}"
 
+
+    def enroll_student(self, enrollment):
+        if not self.enrollments:
+            self.enrollments = [enrollment]
+            return
+
+        for already_enrolled_student in self.enrollments:
+            if enrollment.equals(already_enrolled_student):
+                raise Exception('Student is already enrolled in this section.')
+
+        self.enrollments.append(enrollment)
+
+    def unenroll_student(self, enrollment):
+        for already_enrolled_student in self.enrollments:
+            if enrollment.equals(already_enrolled_student):
+                self.enrollments.remove(already_enrolled_student)
+                return
+        # if it reaches the end and doesn't remove, throw an exception
+        raise Exception('Student is not Enrolled in this section.')
