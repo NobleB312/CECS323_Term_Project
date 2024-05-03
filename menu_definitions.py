@@ -14,7 +14,7 @@ menu_main = Menu('main', 'Please select one of the following options:', [
 add_select = Menu('add select', 'Which type of object do you want to add?:', [
     Option("Department", "add_department()"),
     Option("Course", "add_course()"),
-    # Option("Major", "add_major()"),
+    Option("Major", "add_major()"),
     # Option("Student", "add_student()"),
     Option("Section", "add_section()"),
     # Option("Enrollment", "add_enrollment()"),
