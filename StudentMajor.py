@@ -21,7 +21,7 @@ class StudentMajor(EmbeddedDocument):
 
     meta = {'collection': 'student_majors',
             'indexes': [
-                {'unique': True, 'fields': ['student', 'majorName'], 'name': 'studentmajors_uk_1'}
+                {'unique': True, 'fields': ['student', 'majorName'], 'name': 'student_majors_uk_01'}
                         ]
             }
 

@@ -15,8 +15,8 @@ class Student(Document):
 
     meta = {'collection': 'students',
             'indexes': [
-                {'unique': True, 'fields': ['lastName', 'firstName'], 'name': 'students_uk_1'},
-                {'unique': True, 'fields': ['eMail'], 'name': 'students_uk_2'}
+                {'unique': True, 'fields': ['lastName', 'firstName'], 'name': 'students_uk_01'},
+                {'unique': True, 'fields': ['eMail'], 'name': 'students_uk_02'}
                 ]}
 
 
