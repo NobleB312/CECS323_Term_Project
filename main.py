@@ -50,10 +50,6 @@ def menu_loop(menu: Menu):
         exec(action)
 
 
-def prompt_for_input(prompt_message):
-    return input(prompt_message)
-
-
 def add():
     menu_loop(add_select)
 
@@ -104,20 +100,20 @@ def add_department():
     success = False
     while not success:
         try:
-            department_name = prompt_for_input('Enter the department name: ')
-            department_abbreviation = prompt_for_input('Enter the department abbreviation: ')
-            department_chair_name = prompt_for_input('Enter the department chair name: ')
+            department_name = input('Enter the department name: ')
+            department_abbreviation = input('Enter the department abbreviation: ')
+            department_chair_name = input('Enter the department chair name: ')
             department_building = prompt_for_enum('Enter the department building: ', Department, 'departmentBuilding')
-            department_office = prompt_for_input('Enter the department office number: ')
-            department_description = prompt_for_input('Enter the department description: ')
+            department_office = input('Enter the department office number: ')
+            department_description = input('Enter the department description: ')
 
             new_department = Department(
-                departmentName=department_name,
-                departmentAbbreviation=department_abbreviation,
-                departmentChairName=department_chair_name,
-                departmentBuilding=department_building,
-                departmentOffice=department_office,
-                departmentDescription=department_description
+                department_name,
+                department_abbreviation,
+                department_chair_name,
+                department_building,
+                department_office,
+                department_description
             )
             
             new_department.save()
@@ -137,18 +133,18 @@ def add_course():
     while not success:
         try:
             department = select_department()
-            course_number = int(prompt_for_input('Enter the course number: '))
-            course_name = prompt_for_input('Enter the course name: ')
-            course_description = prompt_for_input('Enter the course description: ')
-            course_units = int(prompt_for_input('Enter the number of course units: '))
+            course_number = int(input('Enter the course number: '))
+            course_name = input('Enter the course name: ')
+            course_description = input('Enter the course description: ')
+            course_units = int(input('Enter the number of course units: '))
 
             #create new course instance
             new_course = Course(
-                department=department,
-                courseNumber=course_number,
-                courseName=course_name,
-                courseDescription=course_description,
-                courseUnits=course_units
+                department,
+                course_number,
+                course_name,
+                course_description,
+                course_units
             )
             
             #attempt to save the new course to the database
@@ -157,6 +153,41 @@ def add_course():
             department.add_course(new_course)
             department.save()
             print(f'Successfully added course: {new_course}')
+            success = True
+
+        except Exception as e:
+            Utilities.print_exception(e)
+
+
+def add_section():
+    """
+    Create a new Course instance.
+    """
+    success = False
+
+    new_section = None
+    while not success:
+        try:
+            course = select_course()
+            section_number = int(input('Enter the section number: '))
+            semester = prompt_for_enum('Select the semester: ', Section, 'semester')
+            section_year = int(input('Enter the section year: '))
+            building = prompt_for_enum('Select the building: ', Section, 'building')
+            room = int(input('Enter the room number: '))
+            schedule = prompt_for_enum('Select the building: ', Section, 'schedule')
+            start_time = prompt_for_date('Enter the start time:')
+            instructor = input('Enter the instructor for this section: ')
+
+            # create new course instance
+            new_section = Section(course, section_number, semester, section_year, building, room, schedule,
+                                  start_time, instructor)
+
+            # attempt to save the new course to the database
+            new_section.save()
+
+            course.add_section(new_section)
+            course.save()
+            print(f'Successfully added section: {new_section}')
             success = True
 
         except Exception as e:

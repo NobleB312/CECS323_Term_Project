@@ -4,6 +4,7 @@ from Course import Course
 from Semester import Semester
 from DepartmentBuilding import DepartmentBuilding
 from Schedule import Schedule
+from datetime import datetime
 
 class Section(Document):
     sectionNumber = IntField(db_field='section_number', required=True)
@@ -12,7 +13,6 @@ class Section(Document):
     building = EnumField(DepartmentBuilding, db_field='building', required=True)
     room = IntField(db_field='room', min_value=1, max_value=999, required=True)
     schedule = EnumField(Schedule, db_field='schedule', required=True)
-    # TODO: put a constraint on time
     startTime = DateTimeField(db_field='start_time', required=True)
     instructor = StringField(db_field='instructor', required=True)
 
@@ -26,6 +26,14 @@ class Section(Document):
                 {'unique': True, 'fields': ['semester', 'sectionYear', 'building', 'room', 'schedule', 'startTime'], 'name': 'sections_uk_02'},
                 {'unique': True, 'fields': ['semester', 'sectionYear', 'schedule', 'startTime', 'instructor'], 'name': 'sections_uk_03'}
             ]}
+
+    def clean(self):
+        time_conversion: datetime = self.startTime
+        hours = time_conversion.hour
+        minutes = time_conversion.minute
+        # Logic: before 8am OR after 8pm OR after 7:30pm. We extracted hours and minutes, so we need two cases for 7:30.
+        if hours < 8 or (hours > 20 or (hours > 19 and minutes > 30)):
+            raise ValidationError("Declaration date cannot be in the future")
 
     def __init__(self, course, sectionNumber, semester, sectionYear, building, room, schedule, startTime, instructor,
                  *args, **values):
@@ -59,14 +67,14 @@ class Section(Document):
             return
 
         for already_enrolled_student in self.enrollments:
-            if enrollment.equals(already_enrolled_student):
+            if enrollment == already_enrolled_student:
                 raise Exception('Student is already enrolled in this section.')
 
         self.enrollments.append(enrollment)
 
     def unenroll_student(self, enrollment):
         for already_enrolled_student in self.enrollments:
-            if enrollment.equals(already_enrolled_student):
+            if enrollment == already_enrolled_student:
                 self.enrollments.remove(already_enrolled_student)
                 return
         # if it reaches the end and doesn't remove, throw an exception

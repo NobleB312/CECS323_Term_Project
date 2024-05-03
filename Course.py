@@ -9,10 +9,10 @@ class Course(Document):
     courseUnits = IntField(db_field='course_units', min_value=1, max_value=5, required=True)
 
     department = ReferenceField(Department, required=True, reverse_delete_rule=mongoengine.CASCADE)
-    departmentName = StringField()
+    departmentName = StringField(db_field='department_name')
 
     sections = ListField(ReferenceField('Section'))
-    # TODO: fix these uniqueness constraint using clean()
+
 
     meta = {'collection': 'courses',
             'indexes': [
@@ -48,15 +48,16 @@ class Course(Document):
             return
 
         for existingSections in self.sections:
-            if section.equals(existingSections):
+            if section == existingSections:
                 raise Exception('Section already exists.')
 
         self.sections.append(section)
 
     def remove_section(self, section):
         for existingSection in self.sections:
-            if section.equals(existingSection):
+            if section == existingSection:
                 self.sections.remove(existingSection)
                 return
 
         raise Exception('Section does not exist')
+

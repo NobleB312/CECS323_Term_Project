@@ -39,14 +39,14 @@ class Student(Document):
             return
 
         for existing_major in self.studentMajors:
-            if major.equals(existing_major):
+            if major == existing_major:
                 raise Exception('Major is already declared.')
 
         self.studentMajors.append(major)
 
     def remove_major(self, major):
         for existing_major in self.studentMajors:
-            if major.equals(existing_major):
+            if major == existing_major:
                 self.studentMajors.remove(existing_major)
                 return
         # if it reaches the end and doesn't remove, throw an exception
@@ -58,14 +58,14 @@ class Student(Document):
             return
 
         for already_enrolled_student in self.enrollments:
-            if enrollment.equals(already_enrolled_student):
+            if enrollment == already_enrolled_student:
                 raise Exception('Student is already enrolled in this section.')
 
         self.enrollments.append(enrollment)
 
     def unenroll_in_section(self, enrollment):
         for already_enrolled_student in self.enrollments:
-            if enrollment.equals(already_enrolled_student):
+            if enrollment == already_enrolled_student:
                 self.enrollments.remove(already_enrolled_student)
                 return
         # if it reaches the end and doesn't remove, throw an exception
