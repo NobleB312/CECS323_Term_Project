@@ -1,20 +1,30 @@
 from mongoengine import *
-import datetime
+from datetime import datetime
 from Major import Major
 
 class StudentMajor(EmbeddedDocument):
 
-    # string implementation
-    # major = StringField(db_field='major', max_length=20, required=True)
     major = ReferenceField(Major, required=True)
     declarationDate = DateTimeField(db_field='declaration_date', required=True)
-    
-    # FIXME: THIS MIGHT BREAK;
-    meta = {
-        'indexes': [
-            {'unique': True, 'fields': ['major'], 'name': 'studentmajors_uk_1'}
-        ]
-    }
+
+    '''
+    No student attributes were passed in for validaiton. We're just using an entire Student object
+    As a reference to the specific student. 
+    '''
+    student = ReferenceField('Student', required=True)
+
+
+    # Clean method allows for declarationDate validation
+    def clean(self):
+        if self.declarationDate > datetime.now():
+            raise ValidationError("Declaration date cannot be in the future")
+
+
+    meta = {'collection': 'student_majors',
+            'indexes': [
+                {'unique': True, 'fields': ['student', 'majorName'], 'name': 'studentmajors_uk_1'}
+                        ]
+            }
 
     def __init__(self, major: str, declarationDate: datetime, *args, **values):
 
