@@ -36,3 +36,27 @@ class Course(Document):
             f'Course Number: {self.courseNumber}\n'\
             f'Course Units: {self.courseUnits}\n'\
             f'Course Description: {self.courseDescription}'
+
+    '''
+       Add and delete functions for sections, since Section is a child of Course and has a reference
+       list within the Course object
+       '''
+
+    def add_section(self, section):
+        if not self.sections:
+            self.sections = [section]
+            return
+
+        for existingSections in self.sections:
+            if section.equals(existingSections):
+                raise Exception('Section already exists.')
+
+        self.sections.append(section)
+
+    def remove_section(self, section):
+        for existingSection in self.sections:
+            if section.equals(existingSection):
+                self.sections.remove(existingSection)
+                return
+
+        raise Exception('Section does not exist')
