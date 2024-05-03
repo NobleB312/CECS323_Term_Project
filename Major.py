@@ -23,5 +23,5 @@ class Major(Document):
         self.majorDescription = majorDescription
 
     def __str__(self):
-        results = f'Major: {self.majorName}: {self.description}'
+        return f'Major: {self.majorName}: {self.majorDescription}'
 
