@@ -8,7 +8,7 @@ class StudentMajor(EmbeddedDocument):
     declarationDate = DateTimeField(db_field='declaration_date', required=True)
 
     '''
-    No student attributes were passed in for validaiton. We're just using an entire Student object
+    No student attributes were passed in for validation. We're just using an entire Student object
     As a reference to the specific student. 
     '''
     student = ReferenceField('Student', required=True)
@@ -38,4 +38,4 @@ class StudentMajor(EmbeddedDocument):
         return self.major
 
     def __eq__(self, other):
-        return self.major == other.major.majorName
+        return get_major().majorName == other.major.majorName

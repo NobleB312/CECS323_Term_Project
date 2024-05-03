@@ -33,20 +33,27 @@ class Student(Document):
             results += '\n\t' + f"declared Major: {declared_major.major} on {declared_major.declarationDate}"
         return results
 
-    def add_major(self, major):
+    def add_major(self, student_major: StudentMajor):
+        """
+        specifically adds an instance of student_major, not major.
+        """
         if not self.studentMajors:
-            self.studentMajors = [major]
+            self.studentMajors = [student_major]
             return
 
         for existing_major in self.studentMajors:
-            if major.equals(existing_major):
+            if student_major == existing_major:
                 raise Exception('Major is already declared.')
 
         self.studentMajors.append(major)
 
-    def remove_major(self, major):
+    def remove_major(self, student_major: StudentMajor):
+        """
+        removes an instance of student_major.
+        :param student_major:   student major to delete.
+        """
         for existing_major in self.studentMajors:
-            if major.equals(existing_major):
+            if student_major == existing_major:
                 self.studentMajors.remove(existing_major)
                 return
         # if it reaches the end and doesn't remove, throw an exception
