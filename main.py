@@ -12,7 +12,7 @@ from Enrollment import Enrollment
 from pymongo import monitoring
 from Menu import Menu
 from Option import Option
-from menu_definitions import menu_main, add_select, select_select, delete_select, update_select
+from menu_definitions import *
 
 
 
@@ -45,6 +45,10 @@ def delete():
 
 def update():
     menu_loop(update_select)
+
+
+def update_enrollment_details():
+    menu_loop(update_enrollment_details_select)
 
 
 def select_department():
