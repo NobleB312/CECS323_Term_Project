@@ -14,7 +14,7 @@ class Major(Document):
 
     meta = {'collection': 'majors',
             'indexes': [
-                {'unique': True, 'fields': ['majorName'], 'name': 'majors_uk_1'}
+                {'unique': True, 'fields': ['majorName'], 'name': 'majors_uk_01'}
              ]}
 
     def __init__(self, majorName: str, majorDescription: str, *args, **values):
@@ -23,5 +23,5 @@ class Major(Document):
         self.majorDescription = majorDescription
 
     def __str__(self):
-        results = f'Major: {self.majorName}: {self.description}'
+        return f'Major: {self.majorName}: {self.majorDescription}'
 

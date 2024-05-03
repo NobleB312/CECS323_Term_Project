@@ -19,14 +19,13 @@ class StudentMajor(EmbeddedDocument):
         if self.declarationDate > datetime.now():
             raise ValidationError("Declaration date cannot be in the future")
 
-
     meta = {'collection': 'student_majors',
             'indexes': [
-                {'unique': True, 'fields': ['student', 'majorName'], 'name': 'studentmajors_uk_1'}
+                {'unique': True, 'fields': ['student', 'majorName'], 'name': 'student_majors_uk_01'}
                         ]
             }
 
-    def __init__(self, major: str, declarationDate: datetime, *args, **values):
+    def __init__(self, major: Major, declarationDate: datetime, *args, **values):
 
         super().__init__(*args, **values)
         self.major = major
@@ -39,4 +38,4 @@ class StudentMajor(EmbeddedDocument):
         return self.major
 
     def __eq__(self, other):
-        return self.major == other.get_major().majorName
+        return self.major == other.major.majorName

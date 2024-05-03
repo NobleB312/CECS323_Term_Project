@@ -1,86 +1,13 @@
 #TODO
 -----------------------------------------
-Classes:
-- Students
-   - student_majors
-- Majors
-- Departments
-- Courses
-- Sections
-- Enrollments
-   - enrollment_details
------------------------------------------
-Main.py
-- 
------------------------------------------
-Uniqueness constraints:
-Department
-  i. {name}
-  ii. {abbreviation}
-  iii. {chairName}
-  iv. {building, office}
-c. Course
-  i. {departmentAbbreviation, courseNumber} – Note that you can use
-      departmentName instead of departmentAbbreviation if you choose to "migrate"
-      that into Course.
-  ii. {departmentAbbreviation, courseName}
-d. Section
-  i. {course, sectionNumber, semester, sectionYear} – Note that course here
-      represents whatever attributes you migrate from Course into Section.
-  ii. {semester, sectionYear, building, room, schedule, startTime}
-  iii. {semester, sectionYear, schedule, startTime, instructor}
-e. Student
-  i. {lastName, firstName} – even though we all know this combination is hardly
-      useful as a uniqueness constraint in the real world.
-  ii. {eMail}
-  iii. {_id} – note, you don't have to worry about creating and managing a separate
-        student_id since MongoDB will give you one whether you ask for it or not.
-f. Major
-  i. {name}
-g. StudentMajor
-  i. {student, majorName} – Just which attributes go into this uniqueness constraint
-      will depend upon what you "migrate" in from Student.
-  h. Enrollment
-  i. {student, section} – The exact attributes in this uniqueness constraint will
-      depend upon what migrates in to uniquely identify the Student instance
-      who is enrolled and the Section instance that they enrolled in.
-  ii. {semester, sectionYear, departmentAbbreviation, courseNumber, studentID}
-      1. This one is new. Essentially, we are making sure that no student can be
-      enrolled in more than one section of the same course during the same
-      semester.
-      2. You may or may not "migrate" departmentAbbreviation and
-      courseNumber into Enrollment. If not, you will have to implement this
-      constraint by performing one or more queries in the database.
------------------------------------------
-Other constraints: 
-Department
-i. Abbreviation must be six characters or less.
-ii. chairName must be 80 characters or less.
-iii. building name must be 10 characters or less.
-1. It was pointed out to me that the IN constraint that I have on building
-(see below) means that you do not have to worry about the length of the
-building name getting out of hand.
-iv. description must be 80 characters or less.
-4/27/2024 12:55:00 AM 5MONGODB ENROLLMENT PROJECT IMPLEMENTATION
-v. Building IN ('ANAC', 'CDC', 'DC', 'ECS', 'EN2', 'EN3', 'EN4', 'EN5', 'ET', 'HSCI', 'NUR',
-'VEC')
-b. StudentMajor
-i. declarationDate <= today
-c. Course
-i. units must be no less than 1 and no greater than 5.
-ii. courseNumber must be >= 100 and < 700
-d. Section
-i. schedule is IN ('MW', 'TuTh', 'MWF', 'F', 'S')
-ii. semester is IN ('Fall', 'Spring', 'Summer I', 'Summer II', 'Summer III', 'Winter')
-iii. room > 0 and room < 1000 (assume no ten story buildings on campus)
-iv. building is IN – the same list as the one for the department office.
-v. startTime >= 8:00 AM and <= 7:30 PM.
-e. PassFail
-i. applicationDate <= today
-f. LetterGrade
-i. minSatistfactory IN ('A', 'B', 'C')
------------------------------------------
-Task assignments: 
-Zack - Department, Course
-Liam - Student, Major, StudentMajor
-Michael - Section, Enrollment, EnrollmentDetails
+Class Add/Deletes:
+Student
+    student majors
+    enrollments
+departments
+    majors
+    courses
+courses
+    sections
+sections
+    enrollments
