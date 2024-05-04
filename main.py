@@ -67,7 +67,7 @@ def update():
     menu_loop(update_select)
 
 
-def update_enrollment_details()
+def update_enrollment_details():
     menu_loop(update_enrollment_details_select)
 
 
