@@ -1,6 +1,7 @@
 from mongoengine import *
 
 from ConstraintUtilities import *
+from EnrollmentDetails import EnrollmentDetails
 from Utilities import Utilities
 from Department import Department
 from Course import Course
@@ -205,6 +206,7 @@ def add_section():
         except Exception as e:
             print('An error occurred: ', Utilities.print_exception(e))
 
+
 def add_student():
     """
     Create a new Department instance.
@@ -215,7 +217,6 @@ def add_student():
             first_name = input('Enter the student first name: ')
             last_name = input('Enter the student last name: ')
             email = input('Enter the student email: ')
-
 
             new_student = Student(
                 firstName=first_name,
@@ -259,6 +260,39 @@ def add_major():
             print('An error occurred: ', Utilities.print_exception(e))
 
 
+def add_enrollment():
+    """
+     Create a new Major instance.
+     """
+    success = False
+    while not success:
+        try:
+            student = select_student()
+            section = select_section()
+
+            # Enrolling in a course by defaults to a letter grade. They can change to Pass/Fail later.
+            enrollment_details = EnrollmentDetails(prompt_for_enum('Enter the minimum satisfactory grade:',
+                                                                   EnrollmentDetails, 'minSatisfactoryGrade'))
+
+            new_enrollment = Enrollment(
+                student=student,
+                section=section,
+                enrollmentDetails=enrollment_details
+            )
+            new_enrollment.save()
+
+            # now we must add to both student and section
+            student.enroll_in_section(new_enrollment)
+            student.save()
+            section.enroll_student(new_enrollment)
+            section.save()
+            print(f'Successfully enrolled:\n  Student - {new_enrollment.student}\n  Section - {new_enrollment.section}')
+            success = True
+
+        except Exception as e:
+            print('An error occurred: ', Utilities.print_exception(e))
+
+
 # function to delete a department
 def delete_department():
     try:
@@ -268,6 +302,7 @@ def delete_department():
         print(f'Deleted department: \n{department}')
     except Exception as e:
         print('An error occurred: ', Utilities.print_exception(e))
+
 
 # function to delete a course
 def delete_course():

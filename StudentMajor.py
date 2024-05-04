@@ -25,9 +25,9 @@ class StudentMajor(EmbeddedDocument):
                         ]
             }
 
-    def __init__(self, major: Major, declarationDate: datetime, *args, **values):
+    def __init__(self, major: Major, declarationDate: datetime, *args, **kwargs):
 
-        super().__init__(*args, **values)
+        super().__init__(*args, **kwargs)
         self.major = major
         self.declarationDate = declarationDate
 

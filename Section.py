@@ -51,7 +51,7 @@ class Section(Document):
 
     def __str__(self):
         return "Section:\n"\
-               f"  Course - {self.course.department.departmentName} {self.course.courseNumber}\n" \
+               f"  Course - {self.course.department.departmentAbbreviation} {self.course.courseNumber}\n" \
                f"  Section Number - {self.sectionNumber}\n" \
                f"  Semester - {self.semester}\n" \
                f"  Year - {self.sectionYear}\n" \

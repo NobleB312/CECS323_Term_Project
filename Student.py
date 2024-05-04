@@ -20,15 +20,15 @@ class Student(Document):
                 ]}
 
 
-    def __init__(self, firstName: str, lastName: str, eMail: str, *args, **values):
+    def __init__(self, firstName: str, lastName: str, eMail: str, *args, **kwargs):
 
-        super().__init__(*args,**values)
+        super().__init__(*args, **kwargs)
         self.firstName = firstName
         self.lastName = lastName
         self.eMail = eMail
 
     def __str__(self):
-        results = f'Student: {self.lastName}, {self.firstName} Email: {self.eMail}'
+        results = f'Student: {self.lastName}, {self.firstName}'
         for declared_major in self.studentMajors:
             results += '\n\t' + f"declared Major: {declared_major.major} on {declared_major.declarationDate}"
         return results
