@@ -368,9 +368,9 @@ def delete_major():
         
         # need to query every student to remove the studentmajor with the major being deleted.
         
-        query = Student.objects()
+        students = Student.objects()
 
-        for student in query:
+        for student in students:
             for studentmajor in student.studentMajors:
                 if studentmajor.major == major:
                     student.remove_major(studentmajor)
