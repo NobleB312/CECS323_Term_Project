@@ -205,6 +205,31 @@ def add_section():
         except Exception as e:
             print('An error occurred: ', Utilities.print_exception(e))
 
+def add_student():
+    """
+    Create a new Department instance.
+    """
+    success = False
+    while not success:
+        try:
+            first_name = input('Enter the student first name: ')
+            last_name = input('Enter the student last name: ')
+            email = input('Enter the student email: ')
+
+
+            new_student = Student(
+                firstName=first_name,
+                lastName=last_name,
+                eMail=email
+            )
+
+            new_student.save()
+            print(f'Successfully added department: {new_student.firstName} {new_student.lastName}')
+            success = True
+
+        except Exception as e:
+            print('An error occurred: ', Utilities.print_exception(e))
+
 
 def add_major():
     """
