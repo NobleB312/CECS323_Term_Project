@@ -331,41 +331,7 @@ def delete_course():
     except Exception as e:
         print('An error occurred: ', Utilities.print_exception(e))
 
-### student section
-
-def add_student_major():
-    """
-    add new student major instance in student.
-    :param:     none.
-    :return:    none.
-    """
-
-    success: bool = False
-    student: Student
-    major: Major
-    new_student_major: StudentMajor
-    while not success:
-        
-        student = select_student()
-        major = select_major()
-        declaration_date = prompt_for_date("Enter the declaration date: ")
-
-        new_student_major = StudentMajor(
-            major=major,
-            declarationDate = declaration_date
-        )
-
-        try:
-            new_student_major.save()
-            student.add_major(new_student_major)
-            student.save()
-            success = True
-        except Exception as e:
-            print('Exception trying to add the new item:')
-            print(Utilities.print_exception(e))
-
-
-def delete_student_major():
+def delete_major_student():
 
     student = select_student()
     student_majors = student.studentMajor
