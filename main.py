@@ -1,5 +1,4 @@
 from mongoengine import *
-
 from ConstraintUtilities import *
 from EnrollmentDetails import EnrollmentDetails
 from Utilities import Utilities
