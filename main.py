@@ -175,7 +175,7 @@ def add_section():
             section_year = int(input('Enter the section year: '))
             building = prompt_for_enum('Select the building: ', Section, 'building')
             room = int(input('Enter the room number: '))
-            schedule = prompt_for_enum('Select the building: ', Section, 'schedule')
+            schedule = prompt_for_enum('Select the weekly meeting days: ', Section, 'schedule')
             hour = int(input('Start time - enter the hour:'))
             minute = int(input('Start time - enter the minute:'))
             # we just want the time; calendar date does not matter for start_time.
@@ -224,7 +224,7 @@ def add_student():
             )
 
             new_student.save()
-            print(f'Successfully added department: {new_student.firstName} {new_student.lastName}')
+            print(f'Successfully added student: {new_student.firstName} {new_student.lastName}')
             success = True
 
         except Exception as e:
