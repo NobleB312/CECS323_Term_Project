@@ -25,3 +25,4 @@ class Major(Document):
     def __str__(self):
         return f'{self.majorName}: {self.majorDescription}'
 
+

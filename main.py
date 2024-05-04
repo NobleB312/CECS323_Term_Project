@@ -290,6 +290,7 @@ def add_enrollment():
         except Exception as e:
             print('An error occurred: ', Utilities.print_exception(e))
 
+
 def add_major_student():
     success = False
     while not success:

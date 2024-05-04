@@ -40,3 +40,4 @@ class StudentMajor(EmbeddedDocument):
 
     def __eq__(self, other):
         return self.major == other.major.majorName
+

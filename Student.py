@@ -33,6 +33,7 @@ class Student(Document):
             results += '\n\t' + f"declared Major: {declared_major.major} on {declared_major.declarationDate}"
         return results
 
+
     def add_major(self, major):
         student_major = StudentMajor(major, datetime.now(), self)
         if not self.studentMajors:
