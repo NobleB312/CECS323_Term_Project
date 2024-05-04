@@ -1,5 +1,6 @@
 from mongoengine import *
-
+import pymongo
+from pprint import pprint
 from ConstraintUtilities import *
 from EnrollmentDetails import EnrollmentDetails
 from Utilities import Utilities
@@ -10,13 +11,14 @@ from Student import Student
 from Section import Section
 from StudentMajor import StudentMajor
 from Enrollment import Enrollment
-from pymongo import monitoring
+from pymongo import monitoring, MongoClient
 from Menu import Menu
 from Option import Option
 from menu_definitions import *
 import DepartmentBuilding
 from datetime import datetime
 
+'''--- Start of Miscellaneous Functions---'''
 
 def prompt_for_enum(prompt: str, cls, attribute_name: str):
     """
@@ -41,8 +43,19 @@ def prompt_for_enum(prompt: str, cls, attribute_name: str):
     else:
         raise ValueError(f'This attribute is not an enum: {attribute_name}')
 
+def assign_letter_grade():
+    try:
+        enrollment = select_enrollment()
 
-# add, delete for all objects
+        letter_grade = prompt_for_enum('Enter the letter grade received for this section', EnrollmentDetails, 'letterGrade')
+        enrollment.add_letter_grade(letter_grade)
+        enrollment.save()
+        print(f'Letter grade added. \n{enrollment}')
+    except Exception as e:
+        print(Utilities.print_exception(e))
+
+'''--- Start of Menu Loop Functions ---'''
+
 def menu_loop(menu: Menu):
     action: str = ''
     while action != menu.last_action():
@@ -50,26 +63,25 @@ def menu_loop(menu: Menu):
         print('next action: ', action)
         exec(action)
 
-
 def add():
     menu_loop(add_select)
-
 
 def select():
     menu_loop(select_select)
 
-
 def delete():
     menu_loop(delete_select)
-
 
 def update():
     menu_loop(update_select)
 
+def list():
+    menu_loop(list_select)
 
 def update_enrollment_details():
     menu_loop(update_enrollment_details_select)
 
+'''--- Start of Select Functions ---'''
 
 def select_department():
     return select_general(Department)
@@ -94,6 +106,7 @@ def select_section():
 def select_enrollment():
     return select_general(Enrollment)
 
+'''--- Start of Add Functions ---'''
 
 def add_department():
     """
@@ -124,7 +137,6 @@ def add_department():
 
         except Exception as e:
             print('An error occurred: ', Utilities.print_exception(e))
-
 
 def add_course():
     """
@@ -159,7 +171,6 @@ def add_course():
 
         except Exception as e:
             print('An error occurred: ', Utilities.print_exception(e))
-
 
 def add_section():
     """
@@ -206,7 +217,6 @@ def add_section():
         except Exception as e:
             print('An error occurred: ', Utilities.print_exception(e))
 
-
 def add_student():
     """
     Create a new Department instance.
@@ -230,7 +240,6 @@ def add_student():
 
         except Exception as e:
             print('An error occurred: ', Utilities.print_exception(e))
-
 
 def add_major():
     """
@@ -258,7 +267,6 @@ def add_major():
 
         except Exception as e:
             print('An error occurred: ', Utilities.print_exception(e))
-
 
 def add_enrollment():
     """
@@ -290,7 +298,6 @@ def add_enrollment():
         except Exception as e:
             print('An error occurred: ', Utilities.print_exception(e))
 
-
 def add_major_student():
     success = False
     while not success:
@@ -307,6 +314,8 @@ def add_major_student():
         except Exception as e:
             print('An error occurred: ', Utilities.print_exception(e))
 
+'''--- Start of Delete Functions ---'''
+
 def delete_department():
     try:
         department = select_department()
@@ -315,8 +324,6 @@ def delete_department():
     except Exception as e:
         print('An error occurred: ', Utilities.print_exception(e))
 
-
-#function to delete a course
 def delete_course():
     try:
         #find the course by its ID and delete it
@@ -347,8 +354,6 @@ def delete_section():
         print(f"Delete section: \n{section}")
     except Exception as e:
         print('An error occurred: ', Utilities.print_exception(e))
-   
-
 
 def delete_major():
     major = select_major()
@@ -399,8 +404,6 @@ def delete_student():
     except Exception as e:
         print('An error occurred: ', Utilities.print_exception(e)) 
 
-    
-
 def delete_major_student():
 
     student = select_student()
@@ -431,9 +434,38 @@ def delete_enrollment():
     
 # list section
 
+'''--- Start of List Functions ---'''
 
+def list_department():
+    departments = Department.objects()
+    for item in departments:
+        pprint(item)
 
-# end
+def list_course():
+    courses = Course.objects()
+    for item in courses:
+        pprint(item)
+
+def list_section():
+    sections = Section.objects()
+    for item in sections:
+        pprint(item)
+
+def list_enrollment():
+    enrollments = Enrollment.objects()
+    for item in enrollments:
+        pprint(item)
+
+def list_student():
+    students = Student.objects()
+    for item in students:
+        pprint(item)
+
+def list_major():
+    majors = Major.objects()
+    for item in majors:
+        pprint(item)
+
 
 if __name__ == '__main__':
     print('Starting in main.')

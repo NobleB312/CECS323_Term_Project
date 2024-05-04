@@ -72,7 +72,7 @@ class Enrollment(Document):
             ]}
 
     def clean(self):
-        self.semester.name = self.section.semester
+        self.semester = self.section.semester
         self.sectionYear = self.section.sectionYear
         self.departmentAbbreviation = self.section.course.department.departmentAbbreviation
         self.courseNumber = self.section.course.courseNumber
