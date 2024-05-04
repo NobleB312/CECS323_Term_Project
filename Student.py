@@ -34,15 +34,12 @@ class Student(Document):
         return results
 
     def add_major(self, major):
+        student_major = StudentMajor(major, datetime.now(), self)
         if not self.studentMajors:
-            self.studentMajors = [major]
+            self.studentMajors = [student_major]
             return
 
-        for existing_major in self.studentMajors:
-            if major == existing_major:
-                raise Exception('Major is already declared.')
-
-        self.studentMajors.append(major)
+        self.studentMajors.append(student_major)
 
     def remove_major(self, major):
         for existing_major in self.studentMajors:

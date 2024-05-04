@@ -290,6 +290,21 @@ def add_enrollment():
         except Exception as e:
             print('An error occurred: ', Utilities.print_exception(e))
 
+def add_major_student():
+    success = False
+    while not success:
+        try:
+            student = select_student()
+            major = select_major()
+
+            student.add_major(major)
+            student.save()
+
+            print(f'Successfully declared:\n  {student}')
+            success = True
+
+        except Exception as e:
+            print('An error occurred: ', Utilities.print_exception(e))
 
 # function to delete a department
 def delete_department():
