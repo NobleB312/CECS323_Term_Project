@@ -358,6 +358,23 @@ def delete_major():
     try:
         # it shouldn't matter that major no longer exists for student majors
         # by the nature of one to squillions.
+        # sike ig deleting major should delete the studentmajor since
+        # studentmajor makes a direct reference to major's id.
+        # which wouldnt work out if trying to read student's declared majors.
+        
+        # need to query every student to remove the studentmajor with the major being deleted.
+        
+        query = Student.objects()
+
+        for student in query:
+            for studentmajor in student.studentMajors:
+                if studentmajor.major == major:
+                    student.remove_major(studentmajor)
+                    student.save()
+                
+        major.department.remove_major(major)
+        major.department.save()
+        
         major.delete()
         print(f"Delete major: \n{major}")
     except Exception as e:
