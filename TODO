@@ -1,6 +1,6 @@
 #TODO
 -----------------------------------------
-Class Add/Deletes:
+Class Deletes:
 Student
     student majors
     enrollments
@@ -11,3 +11,16 @@ courses
     sections
 sections
     enrollments
+    
+NOTE:
+searching by section_uk_03 asks for unnecessary
+details on time like year, month, day, and seconds
+that were not details specifically added by user.
+
+GOOD DELETES:
+student
+student_major
+enrollment
+section
+course
+department

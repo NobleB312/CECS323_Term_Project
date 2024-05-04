@@ -331,21 +331,90 @@ def delete_course():
     except Exception as e:
         print('An error occurred: ', Utilities.print_exception(e))
 
+def delete_section():
+    
+    section = select_section()
+
+    try:
+        section.course.remove_section(section)
+        section.course.save()
+        # should be safe to remove section without touching enrollments
+        # because of CASCADE rule.
+        # sike doesnt update student list.
+        for enrolled in section.enrollments:
+
+            enrolled.student.unenroll_in_section(enrolled)
+            enrolled.student.save()
+        section.delete()
+        print(f"Delete section: \n{section}")
+    except Exception as e:
+        print('An error occurred: ', Utilities.print_exception(e))
+   
+
+
+def delete_major():
+    major = select_major()
+    
+    try:
+        # it shouldn't matter that major no longer exists for student majors
+        # by the nature of one to squillions.
+        major.delete()
+        print(f"Delete major: \n{major}")
+    except Exception as e:
+        print('An error occurred: ', Utilities.print_exception(e))
+
+def delete_student():
+    student = select_student()
+    
+    try:
+        # student_major CASCADES by effect of removing students.
+        # enrollments will also CASCADE.
+        # tested simply deleting student: section enrollments did not properly cascade.
+        # doing manual unenrollment instead like how prof brown did in one to many.
+        for enrolled in student.enrollments:
+            #student.unenroll_in_section(enrolled)
+            #not necessary since student is going bye-bye.
+            
+            # we only need to fix section's references to its enrollments.
+            enrolled.section.unenroll_student(enrolled)
+            enrolled.section.save()
+        
+        student.delete()
+        print(f"Delete student: \n{student}")
+    except Exception as e:
+        print('An error occurred: ', Utilities.print_exception(e)) 
+
+    
+
 def delete_major_student():
 
     student = select_student()
-    student_majors = student.studentMajor
+    student_majors = student.studentMajors
     menu_items: [Option] = []
 
     for student_major in student_majors:
         menu_items.append(Option(student_major.__str__(), student_major))
 
-    student.delete_student_major(Menu('Student Major Menu',
+    student.remove_major(Menu('Student Major Menu',
                                 'Choose which student major to remove', menu_items).menu_prompt())
     student.save()
 
+def delete_enrollment():
+    
+    enrollment = select_enrollment()
+    
+    try:
+        # tested without unenrolling, didnt work.
+        enrollment.student.unenroll_in_section(enrollment)
+        enrollment.student.save()
+        enrollment.section.unenroll_student(enrollment)
+        enrollment.section.save()
+        enrollment.delete()
+        print(f"Delete enrollment: \n{enrollment}")
+    except Exception as e:
+        print('An error occurred: ', Utilities.print_exception(e)) 
+    
 
-### student section end
 
 if __name__ == '__main__':
     print('Starting in main.')
