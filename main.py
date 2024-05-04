@@ -12,7 +12,7 @@ from Enrollment import Enrollment
 from pymongo import monitoring
 from Menu import Menu
 from Option import Option
-from menu_definitions import menu_main, add_select, select_select, delete_select, update_select
+from menu_definitions import *
 import DepartmentBuilding
 from datetime import datetime
 
@@ -88,10 +88,6 @@ def select_student():
 
 def select_section():
     return select_general(Section)
-
-
-def select_student_major():
-    return select_general(StudentMajor)
 
 
 def select_enrollment():
@@ -432,7 +428,11 @@ def delete_enrollment():
     except Exception as e:
         print('An error occurred: ', Utilities.print_exception(e)) 
     
+# list section
 
+
+
+# end
 
 if __name__ == '__main__':
     print('Starting in main.')

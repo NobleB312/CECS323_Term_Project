@@ -35,7 +35,7 @@ class Department(Document):
     def __str__(self):
         return f'{self.departmentName} ({self.departmentAbbreviation}) Department \n'\
             f'Department Chair: {self.departmentChairName}\n'\
-            f'Department Building: {self.departmentBuilding}\n'\
+            f'Department Building: {self.departmentBuilding.name}\n'\
             f'Department Office: {self.departmentOffice}\n'\
             f'Department Description: {self.departmentDescription}'
 

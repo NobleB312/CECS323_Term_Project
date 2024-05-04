@@ -53,12 +53,12 @@ class Section(Document):
         return "Section:\n"\
                f"  Course - {self.course.department.departmentAbbreviation} {self.course.courseNumber}\n" \
                f"  Section Number - {self.sectionNumber}\n" \
-               f"  Semester - {self.semester}\n" \
+               f"  Semester - {self.semester.name}\n" \
                f"  Year - {self.sectionYear}\n" \
-               f"  Building - {self.building}\n" \
+               f"  Building - {self.building.name}\n" \
                f"  Room - {self.room}\n" \
-               f"  Schedule - {self.schedule}\n" \
-               f"  Start Time - {self.startTime}\n" \
+               f"  Schedule - {self.schedule.name}\n" \
+               f"  Start Time - {self.startTime.time()}\n" \
                f"  Instructor - {self.instructor}"
 
 
