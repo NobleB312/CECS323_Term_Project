@@ -234,13 +234,26 @@ def add_major():
             print('An error occurred: ', Utilities.print_exception(e))
 
 
+# function to delete a department
+def delete_department():
+    try:
+        # find the course by its ID and delete it
+        department = select_department()
+        department.delete()
+        print(f'Deleted department: \n{department}')
+    except Exception as e:
+        print('An error occurred: ', Utilities.print_exception(e))
+
 # function to delete a course
 def delete_course():
     try:
         # find the course by its ID and delete it
         course = select_course()
+        # first remove from the list of departments
+        course.department.remove_course(course)
+        course.department.save()
         course.delete()
-        print(f'Deleted course: {course}')
+        print(f'Deleted course: \n{course}')
     except Exception as e:
         print('An error occurred: ', Utilities.print_exception(e))
 

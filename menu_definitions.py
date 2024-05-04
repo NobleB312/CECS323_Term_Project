@@ -25,7 +25,7 @@ add_select = Menu('add select', 'Which type of object do you want to add?:', [
 
 # options for deleting an existing instance
 delete_select = Menu('delete select', 'Which type of object do you want to delete?:', [
-    # Option("Department", "delete_department()"),
+    Option("Department", "delete_department()"),
     Option("Course", "delete_course()"),
     # Option("Major", "delete_major()"),
     # Option("Student", "delete_student()"),
