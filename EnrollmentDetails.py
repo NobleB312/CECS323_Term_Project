@@ -24,10 +24,10 @@ class EnrollmentDetails(EmbeddedDocument):
     def __str__(self):
         result = 'Enrollment Details:\n'
         if self.letterGrade:
-            result += '  Letter grade - ' + str(self.letterGrade) + '\n'
+            result += '  Letter grade - ' + self.letterGrade.name + '\n'
         if self.passFailApplicationDate:
-            result += '  Pass/Fail application Date - ' + str(self.passFailApplicationDate) + '\n'
+            result += '  Pass/Fail application Date - ' + self.passFailApplicationDate+ '\n'
         if self.minSatisfactoryGrade:
-            result += '  Minimum satisfactory grade - ' + str(self.minSatisfactoryGrade) + '\n'
+            result += '  Minimum satisfactory grade - ' + self.minSatisfactoryGrade.name + '\n'
         if self.incRecoveryPlan:
             result += '  Incomplete recovery plan - ' + self.incRecoveryPlan + '\n'

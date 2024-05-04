@@ -43,7 +43,6 @@ select_select = Menu('select select', 'Which type of object do you want to selec
     Option("Student", "print(select_student())"),
     Option("Section", "print(select_section())"),
     Option("Enrollment", "print(select_enrollment())"),
-    Option("Student Major", "print(select_student_major())"),
     Option("Exit", "pass")
 ])
 

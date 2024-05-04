@@ -13,7 +13,7 @@ from Enrollment import Enrollment
 from pymongo import monitoring
 from Menu import Menu
 from Option import Option
-from menu_definitions import menu_main, add_select, select_select, delete_select, update_select
+from menu_definitions import *
 import DepartmentBuilding
 from datetime import datetime
 
@@ -67,7 +67,7 @@ def update():
     menu_loop(update_select)
 
 
-def update_enrollment_details()
+def update_enrollment_details():
     menu_loop(update_enrollment_details_select)
 
 
@@ -89,10 +89,6 @@ def select_student():
 
 def select_section():
     return select_general(Section)
-
-
-def select_student_major():
-    return select_general(StudentMajor)
 
 
 def select_enrollment():
