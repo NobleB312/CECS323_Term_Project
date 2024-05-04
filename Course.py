@@ -9,10 +9,10 @@ class Course(Document):
     courseUnits = IntField(db_field='course_units', min_value=1, max_value=5, required=True)
 
     department = ReferenceField(Department, required=True, reverse_delete_rule=mongoengine.CASCADE)
-    departmentName = StringField()
+    departmentName = StringField(db_field='department_name')
 
     sections = ListField(ReferenceField('Section'))
-    # TODO: fix these uniqueness constraint using clean()
+
 
     meta = {'collection': 'courses',
             'indexes': [
@@ -20,10 +20,12 @@ class Course(Document):
                 {'unique': True, 'fields': ['departmentName', 'courseName'], 'name': 'courses_uk_02'}
             ]}
 
+    def clean(self):
+        self.departmentName = self.department.departmentName
+
     def __init__(self, department, courseNumber, courseName, courseDescription, courseUnits, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.department = department
-        self.departmentName = department.departmentName
         self.courseNumber = courseNumber
         self.courseName = courseName
         self.courseDescription = courseDescription
@@ -31,7 +33,7 @@ class Course(Document):
 
 
     def __str__(self):
-        return f'{self.department} Department\n'\
+        return f'Department: {self.department.departmentName}\n'\
             f'Course Name: {self.courseName}\n'\
             f'Course Number: {self.courseNumber}\n'\
             f'Course Units: {self.courseUnits}\n'\
@@ -48,15 +50,16 @@ class Course(Document):
             return
 
         for existingSections in self.sections:
-            if section.equals(existingSections):
+            if section == existingSections:
                 raise Exception('Section already exists.')
 
         self.sections.append(section)
 
     def remove_section(self, section):
         for existingSection in self.sections:
-            if section.equals(existingSection):
+            if section == existingSection:
                 self.sections.remove(existingSection)
                 return
 
         raise Exception('Section does not exist')
+

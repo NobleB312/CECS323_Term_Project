@@ -14,25 +14,24 @@ menu_main = Menu('main', 'Please select one of the following options:', [
 add_select = Menu('add select', 'Which type of object do you want to add?:', [
     Option("Department", "add_department()"),
     Option("Course", "add_course()"),
-    # Option("Major", "add_major()"),
-    # Option("Student", "add_student()"),
-    # Option("Section", "add_section()"),
-    # Option("Enrollment", "add_enrollment()"),
-    # Option("Student to Major", "add_student_major()"),
-    # Option("Major to Student", "add_major_student()"),
+    Option("Major", "add_major()"),
+    Option("Student", "add_student()"),
+    Option("Section", "add_section()"),
+    Option("Enrollment", "add_enrollment()"),
+    Option("Major to Student", "add_major_student()"),
     Option("Exit", "pass")
 ])
 
+
 # options for deleting an existing instance
 delete_select = Menu('delete select', 'Which type of object do you want to delete?:', [
-    # Option("Department", "delete_department()"),
+    Option("Department", "delete_department()"),
     Option("Course", "delete_course()"),
     # Option("Major", "delete_major()"),
     # Option("Student", "delete_student()"),
     # Option("Section", "delete_section()"),
     # Option("Enrollment", "delete_enrollment()"),
-    # Option("Student to Major", "delete_student_major()"),
-    # Option("Major to Student", "delete_major_student()"),
+    # Option("Major from Student", "delete_major_student()"),
     Option("Exit", "pass")
 ])
 

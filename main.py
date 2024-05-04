@@ -1,6 +1,7 @@
 from mongoengine import *
 
 from ConstraintUtilities import *
+from EnrollmentDetails import EnrollmentDetails
 from Utilities import Utilities
 from Department import Department
 from Course import Course
@@ -14,6 +15,7 @@ from Menu import Menu
 from Option import Option
 from menu_definitions import menu_main, add_select, select_select, delete_select, update_select
 import DepartmentBuilding
+from datetime import datetime
 
 
 def prompt_for_enum(prompt: str, cls, attribute_name: str):
@@ -40,18 +42,13 @@ def prompt_for_enum(prompt: str, cls, attribute_name: str):
         raise ValueError(f'This attribute is not an enum: {attribute_name}')
 
 
-
-#add, delete for all objects
+# add, delete for all objects
 def menu_loop(menu: Menu):
     action: str = ''
     while action != menu.last_action():
         action = menu.menu_prompt()
         print('next action: ', action)
         exec(action)
-
-
-def prompt_for_input(prompt_message):
-    return input(prompt_message)
 
 
 def add():
@@ -97,6 +94,7 @@ def select_student_major():
 def select_enrollment():
     return select_general(Enrollment)
 
+
 def add_department():
     """
     Create a new Department instance.
@@ -104,12 +102,12 @@ def add_department():
     success = False
     while not success:
         try:
-            department_name = prompt_for_input('Enter the department name: ')
-            department_abbreviation = prompt_for_input('Enter the department abbreviation: ')
-            department_chair_name = prompt_for_input('Enter the department chair name: ')
+            department_name = input('Enter the department name: ')
+            department_abbreviation = input('Enter the department abbreviation: ')
+            department_chair_name = input('Enter the department chair name: ')
             department_building = prompt_for_enum('Enter the department building: ', Department, 'departmentBuilding')
-            department_office = prompt_for_input('Enter the department office number: ')
-            department_description = prompt_for_input('Enter the department description: ')
+            department_office = input('Enter the department office number: ')
+            department_description = input('Enter the department description: ')
 
             new_department = Department(
                 departmentName=department_name,
@@ -119,7 +117,7 @@ def add_department():
                 departmentOffice=department_office,
                 departmentDescription=department_description
             )
-            
+
             new_department.save()
             print(f'Successfully added department: {new_department.departmentName}')
             success = True
@@ -137,12 +135,12 @@ def add_course():
     while not success:
         try:
             department = select_department()
-            course_number = int(prompt_for_input('Enter the course number: '))
-            course_name = prompt_for_input('Enter the course name: ')
-            course_description = prompt_for_input('Enter the course description: ')
-            course_units = int(prompt_for_input('Enter the number of course units: '))
+            course_number = int(input('Enter the course number: '))
+            course_name = input('Enter the course name: ')
+            course_description = input('Enter the course description: ')
+            course_units = int(input('Enter the number of course units: '))
 
-            #create new course instance
+            # create new course instance
             new_course = Course(
                 department=department,
                 courseNumber=course_number,
@@ -150,8 +148,8 @@ def add_course():
                 courseDescription=course_description,
                 courseUnits=course_units
             )
-            
-            #attempt to save the new course to the database
+
+            # attempt to save the new course to the database
             new_course.save()
 
             department.add_course(new_course)
@@ -160,45 +158,178 @@ def add_course():
             success = True
 
         except Exception as e:
-            Utilities.print_exception(e)
+            print('An error occurred: ', Utilities.print_exception(e))
 
 
-# def add_major():
-#     """
-#     Create a new Major instance.
-#     """
-#     success = False
-#     while not success:
-#         try:
-#             major_name = prompt_for_input('Enter the major name (up to 20 characters): ')
-#             major_description = prompt_for_input('Enter the major description (up to 800 characters): ')
-#
-#             department_name = prompt_for_input('Enter the department name: ')
-#             department = Department.objects.get(departmentName=department_name)
-#
-#             new_major = Major(
-#                 majorName=major_name,
-#                 majorDescription=major_description,
-#                 department=department
-#             )
-#
-#             new_major.save()
-#             print(f'Successfully added major: {new_major.majorName}')
-#             success = True
-#
-#         except Exception as e:
-#             print(f'An error occurred: {e}')
+def add_section():
+    """
+    Create a new Section instance.
+    """
+    success = False
+
+    new_section = None
+    while not success:
+        try:
+            course = select_course()
+            section_number = int(input('Enter the section number: '))
+            semester = prompt_for_enum('Select the semester: ', Section, 'semester')
+            section_year = int(input('Enter the section year: '))
+            building = prompt_for_enum('Select the building: ', Section, 'building')
+            room = int(input('Enter the room number: '))
+            schedule = prompt_for_enum('Select the building: ', Section, 'schedule')
+            hour = int(input('Start time - enter the hour:'))
+            minute = int(input('Start time - enter the minute:'))
+            # we just want the time; calendar date does not matter for start_time.
+            start_time = datetime(year=1, month=1, day=1, hour=hour, minute=minute)
+            instructor = input('Enter the instructor for this section: ')
+
+            new_section = Section(
+                course=course,
+                sectionNumber=section_number,
+                semester=semester,
+                sectionYear=section_year,
+                building=building,
+                room=room,
+                schedule=schedule,
+                startTime=start_time,
+                instructor=instructor
+            )
+
+            new_section.save()
+
+            course.add_section(new_section)
+            course.save()
+
+            print(f'Successfully added section: {new_section}')
+            success = True
+
+        except Exception as e:
+            print('An error occurred: ', Utilities.print_exception(e))
 
 
-#function to delete a course
+def add_student():
+    """
+    Create a new Department instance.
+    """
+    success = False
+    while not success:
+        try:
+            first_name = input('Enter the student first name: ')
+            last_name = input('Enter the student last name: ')
+            email = input('Enter the student email: ')
+
+            new_student = Student(
+                firstName=first_name,
+                lastName=last_name,
+                eMail=email
+            )
+
+            new_student.save()
+            print(f'Successfully added department: {new_student.firstName} {new_student.lastName}')
+            success = True
+
+        except Exception as e:
+            print('An error occurred: ', Utilities.print_exception(e))
+
+
+def add_major():
+    """
+     Create a new Major instance.
+     """
+    success = False
+    while not success:
+        try:
+            department = select_department()
+            major_name = input('Enter the major name (up to 20 characters): ')
+            major_description = input('Enter the major description (up to 800 characters): ')
+
+            new_major = Major(
+                majorName=major_name,
+                majorDescription=major_description,
+                department=department
+            )
+
+            new_major.save()
+
+            department.add_major(new_major)
+            department.save()
+            print(f'Successfully added major: {new_major.majorName}')
+            success = True
+
+        except Exception as e:
+            print('An error occurred: ', Utilities.print_exception(e))
+
+
+def add_enrollment():
+    """
+     Create a new Major instance.
+     """
+    success = False
+    while not success:
+        try:
+            student = select_student()
+            section = select_section()
+
+            new_enrollment = Enrollment(
+                student=student,
+                section=section
+            )
+
+            new_enrollment.add_min_satisfactory_grade((prompt_for_enum('Enter the minimum satisfactory grade:',
+                                                                       EnrollmentDetails, 'minSatisfactoryGrade')))
+            new_enrollment.save()
+
+            # now we must add to both student and section
+            student.enroll_in_section(new_enrollment)
+            student.save()
+            section.enroll_student(new_enrollment)
+            section.save()
+            print(f'Successfully enrolled:\n  Student - {new_enrollment.student}\n  {new_enrollment.section}')
+            success = True
+
+        except Exception as e:
+            print('An error occurred: ', Utilities.print_exception(e))
+
+
+def add_major_student():
+    success = False
+    while not success:
+        try:
+            student = select_student()
+            major = select_major()
+
+            student.add_major(major)
+            student.save()
+
+            print(f'Successfully declared:\n  {student}')
+            success = True
+
+        except Exception as e:
+            print('An error occurred: ', Utilities.print_exception(e))
+
+# function to delete a department
+def delete_department():
+    try:
+        # find the course by its ID and delete it
+        department = select_department()
+        department.delete()
+        print(f'Deleted department: \n{department}')
+    except Exception as e:
+        print('An error occurred: ', Utilities.print_exception(e))
+
+
+# function to delete a course
 def delete_course():
     try:
-        #find the course by its ID and delete it
+        # find the course by its ID and delete it
         course = select_course()
+        # first remove from the list of departments
+        course.department.remove_course(course)
+        course.department.save()
         course.delete()
-        print(f'Deleted course: {course}')
+        print(f'Deleted course: \n{course}')
     except Exception as e:
-        print(f'Error deleting course: {e}')
+        print('An error occurred: ', Utilities.print_exception(e))
 
 ### student section
 

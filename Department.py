@@ -49,14 +49,14 @@ class Department(Document):
             return
 
         for existingCourse in self.courses:
-            if course.equals(existingCourse):
+            if course == existingCourse:
                 raise Exception('Course already exists.')
 
         self.courses.append(course)
 
     def remove_course(self, course):
         for existingCourse in self.courses:
-            if course.equals(existingCourse):
+            if course == existingCourse:
                 self.courses.remove(existingCourse)
                 return
 
@@ -73,14 +73,14 @@ class Department(Document):
             return
 
         for existingMajor in self.majors:
-            if major.equals(existingMajor):
+            if major == existingMajor:
                 raise Exception('Major already exists.')
 
         self.majors.append(major)
 
     def remove_major(self, major):
         for existingMajor in self.majors:
-            if major.equals(existingMajor):
+            if major == existingMajor:
                 self.majors.remove(existingMajor)
                 return
 

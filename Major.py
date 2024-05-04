@@ -17,11 +17,12 @@ class Major(Document):
                 {'unique': True, 'fields': ['majorName'], 'name': 'majors_uk_01'}
              ]}
 
-    def __init__(self, majorName: str, majorDescription: str, *args, **values):
-        super().__init__(*args, **values)
+    def __init__(self, majorName: str, majorDescription: str, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.majorName = majorName
         self.majorDescription = majorDescription
 
     def __str__(self):
-        return f'Major: {self.majorName}: {self.majorDescription}'
+        return f'{self.majorName}: {self.majorDescription}'
+
 

@@ -20,23 +20,22 @@ class Student(Document):
                 ]}
 
 
-    def __init__(self, firstName: str, lastName: str, eMail: str, *args, **values):
+    def __init__(self, firstName: str, lastName: str, eMail: str, *args, **kwargs):
 
-        super().__init__(*args,**values)
+        super().__init__(*args, **kwargs)
         self.firstName = firstName
         self.lastName = lastName
         self.eMail = eMail
 
     def __str__(self):
-        results = f'Student: {self.lastName}, {self.firstName} Email: {self.eMail}'
+        results = f'Student: {self.lastName}, {self.firstName}'
         for declared_major in self.studentMajors:
             results += '\n\t' + f"declared Major: {declared_major.major} on {declared_major.declarationDate}"
         return results
 
-    def add_major(self, student_major: StudentMajor):
-        """
-        specifically adds an instance of student_major, not major.
-        """
+
+    def add_major(self, major):
+        student_major = StudentMajor(major, datetime.now(), self)
         if not self.studentMajors:
             self.studentMajors = [student_major]
             return
@@ -53,7 +52,7 @@ class Student(Document):
         :param student_major:   student major to delete.
         """
         for existing_major in self.studentMajors:
-            if student_major == existing_major:
+            if major == existing_major:
                 self.studentMajors.remove(existing_major)
                 return
         # if it reaches the end and doesn't remove, throw an exception
@@ -65,14 +64,14 @@ class Student(Document):
             return
 
         for already_enrolled_student in self.enrollments:
-            if enrollment.equals(already_enrolled_student):
+            if enrollment == already_enrolled_student:
                 raise Exception('Student is already enrolled in this section.')
 
         self.enrollments.append(enrollment)
 
     def unenroll_in_section(self, enrollment):
         for already_enrolled_student in self.enrollments:
-            if enrollment.equals(already_enrolled_student):
+            if enrollment == already_enrolled_student:
                 self.enrollments.remove(already_enrolled_student)
                 return
         # if it reaches the end and doesn't remove, throw an exception

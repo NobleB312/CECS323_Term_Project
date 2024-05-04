@@ -25,11 +25,12 @@ class StudentMajor(EmbeddedDocument):
                         ]
             }
 
-    def __init__(self, major: Major, declarationDate: datetime, *args, **values):
+    def __init__(self, major, declarationDate, student, *args, **kwargs):
 
-        super().__init__(*args, **values)
+        super().__init__(*args, **kwargs)
         self.major = major
         self.declarationDate = declarationDate
+        self.student = student
 
     def __str__(self):
         return f'Student Major: Major: {self.major.majorName} on {self.declarationDate}'
@@ -38,4 +39,4 @@ class StudentMajor(EmbeddedDocument):
         return self.major
 
     def __eq__(self, other):
-        return get_major().majorName == other.major.majorName
+        return self.get_major().majorName == other.major.majorName
