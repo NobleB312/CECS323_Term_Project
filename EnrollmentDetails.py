@@ -18,9 +18,8 @@ class EnrollmentDetails(EmbeddedDocument):
                 raise ValidationError("Pass/Fail application date cannot be in the future")
 
     # The student defaults to having a minimum satisfactory grade. They can change to Pass/Fail later.
-    def __init__(self, min_satisfactory_grade, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.minSatisfactoryGrade = min_satisfactory_grade
 
     def __str__(self):
         result = 'Enrollment Details:\n'

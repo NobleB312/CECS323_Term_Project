@@ -270,15 +270,13 @@ def add_enrollment():
             student = select_student()
             section = select_section()
 
-            # Enrolling in a course by defaults to a letter grade. They can change to Pass/Fail later.
-            enrollment_details = EnrollmentDetails(prompt_for_enum('Enter the minimum satisfactory grade:',
-                                                                   EnrollmentDetails, 'minSatisfactoryGrade'))
-
             new_enrollment = Enrollment(
                 student=student,
-                section=section,
-                enrollmentDetails=enrollment_details
+                section=section
             )
+
+            new_enrollment.add_min_satisfactory_grade((prompt_for_enum('Enter the minimum satisfactory grade:',
+                                                                       EnrollmentDetails, 'minSatisfactoryGrade')))
             new_enrollment.save()
 
             # now we must add to both student and section
@@ -286,7 +284,7 @@ def add_enrollment():
             student.save()
             section.enroll_student(new_enrollment)
             section.save()
-            print(f'Successfully enrolled:\n  Student - {new_enrollment.student}\n  Section - {new_enrollment.section}')
+            print(f'Successfully enrolled:\n  Student - {new_enrollment.student}\n  {new_enrollment.section}')
             success = True
 
         except Exception as e:
