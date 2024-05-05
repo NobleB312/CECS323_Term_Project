@@ -7,6 +7,7 @@ menu_main = Menu('main', 'Please select one of the following options:', [
     Option("Delete existing instance", "delete()"),
     Option("Select existing instance", "select()"),
     Option("Update existing instance", "update()"),
+    Option("List existing instance", "list()"),
     Option("Exit", "pass")
 ])
 
@@ -60,3 +61,14 @@ update_enrollment_details_select = Menu("update enrollment details select", 'Whi
                                             # Option("Incomplete recovery plan", "update_inc_recovery_plan()"),
                                             Option("Exit", "pass")
                                         ])
+
+# options for listing the existing options
+list_select = Menu('list select', 'Which type of object do you want to list:', [
+    Option("Department", "print(list_department())"),
+    Option("Course", "print(list_course())"),
+    Option("Major", "print(list_major())"),
+    Option("Student", "print(list_student())"),
+    Option("Section", "print(list_section())"),
+    Option("Enrollment", "print(list_enrollment())"),
+    Option("Exit", "pass")
+])
