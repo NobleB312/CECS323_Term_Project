@@ -43,16 +43,7 @@ def prompt_for_enum(prompt: str, cls, attribute_name: str):
     else:
         raise ValueError(f'This attribute is not an enum: {attribute_name}')
 
-def assign_letter_grade():
-    try:
-        enrollment = select_enrollment()
 
-        letter_grade = prompt_for_enum('Enter the letter grade received for this section', EnrollmentDetails, 'letterGrade')
-        enrollment.add_letter_grade(letter_grade)
-        enrollment.save()
-        print(f'Letter grade added. \n{enrollment}')
-    except Exception as e:
-        print(Utilities.print_exception(e))
 
 '''--- Start of Menu Loop Functions ---'''
 
@@ -314,6 +305,56 @@ def add_major_student():
         except Exception as e:
             print('An error occurred: ', Utilities.print_exception(e))
 
+
+'''--- Start of Update Enrollment Functions ---'''
+def assign_letter_grade():
+    try:
+        enrollment = select_enrollment()
+
+        letter_grade = prompt_for_enum('Enter the letter grade received for this section', EnrollmentDetails,
+                                       'letterGrade')
+        enrollment.add_letter_grade(letter_grade)
+        enrollment.save()
+        print(f'Letter grade added. \n{enrollment}')
+    except Exception as e:
+        print(Utilities.print_exception(e))
+
+def update_pass_fail_application_date():
+    try:
+        enrollment = select_enrollment()
+
+        pass_fail_application_date = datetime.now()
+        enrollment.add_pass_fail_application_date(pass_fail_application_date)
+        enrollment.save()
+        print(f'Pass/Fail grading applied. \n{enrollment}')
+
+    except Exception as e:
+        print(Utilities.print_exception(e))
+
+def update_min_satisfactory_grade():
+    try:
+        enrollment = select_enrollment()
+
+        letter_grade = prompt_for_enum('Enter the minimum satisfactory grade for this section', EnrollmentDetails,
+                                       'minSatisfactoryGrade')
+        enrollment.add_min_satisfactory_grade(letter_grade)
+        enrollment.save()
+        print(f'Minimum satisfactory grade added. \n{enrollment}')
+    except Exception as e:
+        print(Utilities.print_exception(e))
+
+def update_inc_recovery_plan():
+    try:
+        enrollment = select_enrollment()
+
+        inc_recovery_plan = input('Enter your recovery plan for your incomplete course:')
+        enrollment.add_inc_recovery_plan(inc_recovery_plan)
+        enrollment.save()
+        print(f'Incomplete recovery plan applied. \n{enrollment}')
+
+    except Exception as e:
+        print(Utilities.print_exception(e))
+
 '''--- Start of Delete Functions ---'''
 
 def delete_department():
@@ -343,9 +384,6 @@ def delete_section():
     try:
         section.course.remove_section(section)
         section.course.save()
-        # should be safe to remove section without touching enrollments
-        # because of CASCADE rule.
-        # sike doesnt update student list.
         for enrolled in section.enrollments:
 
             enrolled.student.unenroll_in_section(enrolled)
@@ -359,11 +397,6 @@ def delete_major():
     major = select_major()
     
     try:
-        # it shouldn't matter that major no longer exists for student majors
-        # by the nature of one to squillions.
-        # sike ig deleting major should delete the studentmajor since
-        # studentmajor makes a direct reference to major's id.
-        # which wouldnt work out if trying to read student's declared majors.
         
         # need to query every student to remove the studentmajor with the major being deleted.
         
@@ -389,7 +422,6 @@ def delete_student():
     try:
         # student_major CASCADES by effect of removing students.
         # enrollments will also CASCADE.
-        # tested simply deleting student: section enrollments did not properly cascade.
         # doing manual unenrollment instead like how prof brown did in one to many.
         for enrolled in student.enrollments:
             #student.unenroll_in_section(enrolled)
@@ -422,7 +454,6 @@ def delete_enrollment():
     enrollment = select_enrollment()
     
     try:
-        # tested without unenrolling, didnt work.
         enrollment.student.unenroll_in_section(enrollment)
         enrollment.student.save()
         enrollment.section.unenroll_student(enrollment)

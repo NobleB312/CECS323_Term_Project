@@ -84,7 +84,7 @@ class Enrollment(Document):
 
 
     def __str__(self):
-        return f"Enrollment:\n  {self.semester} {self.sectionYear} " \
-               f"\n  Student - {self.student.firstName} {self.student.lastName}" \
-               f"\n  Section - {self.departmentAbbreviation} {self.courseNumber} " \
-               f"S{self.section.sectionNumber}\n"
+        return f"Enrollment:\n  Student - {self.student.firstName} {self.student.lastName}" \
+               f"\n  Section - {self.section.course.department.departmentAbbreviation} " \
+               f"{self.section.course.courseNumber} " \
+               f"S{self.section.sectionNumber}\n{self.enrollmentDetails}"

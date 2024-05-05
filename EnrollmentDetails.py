@@ -26,8 +26,9 @@ class EnrollmentDetails(EmbeddedDocument):
         if self.letterGrade:
             result += '  Letter grade - ' + self.letterGrade.name + '\n'
         if self.passFailApplicationDate:
-            result += '  Pass/Fail application Date - ' + self.passFailApplicationDate+ '\n'
+            result += '  Pass/Fail application Date - ' + str(self.passFailApplicationDate) + '\n'
         if self.minSatisfactoryGrade:
             result += '  Minimum satisfactory grade - ' + self.minSatisfactoryGrade.name + '\n'
         if self.incRecoveryPlan:
             result += '  Incomplete recovery plan - ' + self.incRecoveryPlan + '\n'
+        return result

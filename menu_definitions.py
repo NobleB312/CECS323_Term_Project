@@ -55,10 +55,10 @@ update_select = Menu("update select", 'Which type of object do you want to updat
 
 update_enrollment_details_select = Menu("update enrollment details select", 'Which enrollment detail are you adding?:',
                                         [
-                                            # Option("Letter grade", "update_letter_grade()"),
-                                            # Option("Pass/Fail application date", "update_pass_fail_application_date()"),
-                                            # Option("Minimum satisfactory grade", "update_min_satisfactory_grade()"),
-                                            # Option("Incomplete recovery plan", "update_inc_recovery_plan()"),
+                                            Option("Letter grade", "update_letter_grade()"),
+                                            Option("Pass/Fail application date", "update_pass_fail_application_date()"),
+                                            Option("Minimum satisfactory grade", "update_min_satisfactory_grade()"),
+                                            Option("Incomplete recovery plan", "update_inc_recovery_plan()"),
                                             Option("Exit", "pass")
                                         ])
 
