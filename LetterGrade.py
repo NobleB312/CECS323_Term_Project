@@ -7,6 +7,5 @@ class LetterGrade(Enum):
     C = 'C'
     D = 'D'
     F = 'F'
-    W = 'W'
     P = 'P'
-    NP = 'P'
+    NP = 'NP'
