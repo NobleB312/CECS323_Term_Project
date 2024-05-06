@@ -137,7 +137,7 @@ def add_department():
             success = True
 
         except Exception as e:
-            print('An error occurred: ', Utilities.print_exception(e))
+            print(e)
 
 def add_course():
     """
@@ -171,7 +171,7 @@ def add_course():
             success = True
 
         except Exception as e:
-            print('An error occurred: ', Utilities.print_exception(e))
+            print(e)
 
 def add_section():
     """
@@ -216,7 +216,7 @@ def add_section():
             success = True
 
         except Exception as e:
-            print('An error occurred: ', Utilities.print_exception(e))
+            print(e)
 
 def add_student():
     """
@@ -240,7 +240,7 @@ def add_student():
             success = True
 
         except Exception as e:
-            print('An error occurred: ', Utilities.print_exception(e))
+            print(e)
 
 def add_major():
     """
@@ -267,7 +267,7 @@ def add_major():
             success = True
 
         except Exception as e:
-            print('An error occurred: ', Utilities.print_exception(e))
+            print(e)
 
 def add_enrollment():
     """
@@ -297,7 +297,7 @@ def add_enrollment():
             success = True
 
         except Exception as e:
-            print('An error occurred: ', Utilities.print_exception(e))
+            print(e)
 
 def add_major_student():
     success = False
@@ -313,7 +313,7 @@ def add_major_student():
             success = True
 
         except Exception as e:
-            print('An error occurred: ', Utilities.print_exception(e))
+            print(e)
 
 
 '''--- Start of Update Enrollment Functions ---'''
@@ -327,7 +327,7 @@ def assign_letter_grade():
         enrollment.save()
         print(f'Letter grade added. \n{enrollment}')
     except Exception as e:
-        print(Utilities.print_exception(e))
+        print(e)
 
 def update_pass_fail_application_date():
     try:
@@ -339,7 +339,7 @@ def update_pass_fail_application_date():
         print(f'Pass/Fail grading applied. \n{enrollment}')
 
     except Exception as e:
-        print(Utilities.print_exception(e))
+        print(e)
 
 def update_min_satisfactory_grade():
     try:
@@ -351,7 +351,7 @@ def update_min_satisfactory_grade():
         enrollment.save()
         print(f'Minimum satisfactory grade added. \n{enrollment}')
     except Exception as e:
-        print(Utilities.print_exception(e))
+        print(e)
 
 def update_inc_recovery_plan():
     try:
@@ -363,7 +363,7 @@ def update_inc_recovery_plan():
         print(f'Incomplete recovery plan applied. \n{enrollment}')
 
     except Exception as e:
-        print(Utilities.print_exception(e))
+        print(e)
 
 '''--- Start of Delete Functions ---'''
 
@@ -373,7 +373,7 @@ def delete_department():
         department.delete()
         print(f'Deleted department: \n{department}')
     except Exception as e:
-        print('An error occurred: ', Utilities.print_exception(e))
+        print(e)
 
 def delete_course():
     try:
@@ -385,7 +385,7 @@ def delete_course():
         course.delete()
         print(f'Deleted course: \n{course}')
     except Exception as e:
-        print('An error occurred: ', Utilities.print_exception(e))
+        print(e)
 
 def delete_section():
     
@@ -401,7 +401,7 @@ def delete_section():
         section.delete()
         print(f"Delete section: \n{section}")
     except Exception as e:
-        print('An error occurred: ', Utilities.print_exception(e))
+        print(e)
 
 def delete_major():
     major = select_major()
@@ -424,7 +424,7 @@ def delete_major():
         major.delete()
         print(f"Delete major: \n{major}")
     except Exception as e:
-        print('An error occurred: ', Utilities.print_exception(e))
+        print(e)
 
 def delete_student():
     student = select_student()
@@ -444,7 +444,7 @@ def delete_student():
         student.delete()
         print(f"Delete student: \n{student}")
     except Exception as e:
-        print('An error occurred: ', Utilities.print_exception(e)) 
+        print(e)
 
 def delete_major_student():
     try:
@@ -460,7 +460,7 @@ def delete_major_student():
         student.save()
         print(f"Delete Student Major: {student_major}")
     except Exception as e:
-        print('An error occurred: ', Utilities.print_exception(e))
+        print(e)
 
 def delete_enrollment():
     
@@ -474,7 +474,7 @@ def delete_enrollment():
         enrollment.delete()
         print(f"Delete enrollment: \n{enrollment}")
     except Exception as e:
-        print('An error occurred: ', Utilities.print_exception(e)) 
+        print(e)
     
 # list section
 
