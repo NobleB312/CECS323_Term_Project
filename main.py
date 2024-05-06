@@ -93,6 +93,16 @@ def select_student():
 def select_section():
     return select_general(Section)
 
+def select_student_major():
+    success = False
+    while True:
+        major = select_major()
+        student = select_student()
+        for student_major in student.studentMajors:
+            if student_major.major == major:
+                return student_major
+        print('Student major not found.')
+
 
 def select_enrollment():
     return select_general(Enrollment)
@@ -437,17 +447,20 @@ def delete_student():
         print('An error occurred: ', Utilities.print_exception(e)) 
 
 def delete_major_student():
+    try:
+        student = select_student()
+        student_majors = student.studentMajors
+        menu_items: [Option] = []
 
-    student = select_student()
-    student_majors = student.studentMajors
-    menu_items: [Option] = []
+        for student_major in student_majors:
+            menu_items.append(Option(student_major.__str__(), student_major))
 
-    for student_major in student_majors:
-        menu_items.append(Option(student_major.__str__(), student_major))
-
-    student.remove_major(Menu('Student Major Menu',
-                                'Choose which student major to remove', menu_items).menu_prompt())
-    student.save()
+        student_major = Menu('Student Major Menu','Choose which student major to remove', menu_items).menu_prompt()
+        student.remove_major(student_major)
+        student.save()
+        print(f"Delete Student Major: {student_major}")
+    except Exception as e:
+        print('An error occurred: ', Utilities.print_exception(e))
 
 def delete_enrollment():
     
@@ -496,6 +509,14 @@ def list_major():
     majors = Major.objects()
     for item in majors:
         pprint(item)
+
+def list_student_major():
+    students = Student.objects()
+    for student in students:
+        if student.studentMajors:
+            for item in student.studentMajors:
+                pprint(item)
+
 
 
 if __name__ == '__main__':

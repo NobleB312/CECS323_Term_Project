@@ -44,6 +44,7 @@ select_select = Menu('select select', 'Which type of object do you want to selec
     Option("Student", "print(select_student())"),
     Option("Section", "print(select_section())"),
     Option("Enrollment", "print(select_enrollment())"),
+    Option("Student Major", "print(select_student_major())"),
     Option("Exit", "pass")
 ])
 
@@ -55,7 +56,7 @@ update_select = Menu("update select", 'Which type of object do you want to updat
 
 update_enrollment_details_select = Menu("update enrollment details select", 'Which enrollment detail are you adding?:',
                                         [
-                                            Option("Letter grade", "update_letter_grade()"),
+                                            Option("Letter grade", "assign_letter_grade()"),
                                             Option("Pass/Fail application date", "update_pass_fail_application_date()"),
                                             Option("Minimum satisfactory grade", "update_min_satisfactory_grade()"),
                                             Option("Incomplete recovery plan", "update_inc_recovery_plan()"),
@@ -64,11 +65,12 @@ update_enrollment_details_select = Menu("update enrollment details select", 'Whi
 
 # options for listing the existing options
 list_select = Menu('list select', 'Which type of object do you want to list:', [
-    Option("Department", "print(list_department())"),
-    Option("Course", "print(list_course())"),
-    Option("Major", "print(list_major())"),
-    Option("Student", "print(list_student())"),
-    Option("Section", "print(list_section())"),
-    Option("Enrollment", "print(list_enrollment())"),
+    Option("Department", "list_department()"),
+    Option("Course", "list_course()"),
+    Option("Major", "list_major()"),
+    Option("Student", "list_student()"),
+    Option("Section", "list_section()"),
+    Option("Enrollment", "list_enrollment()"),
+    Option("Student Major", "list_student_major()"),
     Option("Exit", "pass")
 ])

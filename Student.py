@@ -33,6 +33,9 @@ class Student(Document):
             results += '\n\t' + f"declared Major: {declared_major.major} on {declared_major.declarationDate}"
         return results
 
+    def clean(self):
+        if len(self.studentMajors) == 0:
+            del self.studentMajors
 
     def add_major(self, major):
         student_major = StudentMajor(major, datetime.now(), self)

@@ -45,6 +45,10 @@ class Enrollment(Document):
 
     def add_min_satisfactory_grade(self, min_satisfactory_grade):
         self.enrollment_details_instance()
+        if self.enrollmentDetails.letterGrade:
+            raise ValidationError('Letter grade already received.')
+        if self.enrollmentDetails.incRecoveryPlan:
+            raise ValidationError('This class was dropped.')
         # disjoint from pass fail application date
         if self.enrollmentDetails.passFailApplicationDate:
             del self.enrollmentDetails.passFailApplicationDate
@@ -59,6 +63,10 @@ class Enrollment(Document):
 
     def add_pass_fail_application_date(self, pass_fail_application_date):
         self.enrollment_details_instance()
+        if self.enrollmentDetails.letterGrade:
+            raise ValidationError('Letter grade already received.')
+        if self.enrollmentDetails.incRecoveryPlan:
+            raise ValidationError('This class was dropped.')
         # disjoint from minimum satisfactory grade, but we want it to simply remove the satisfactory grade, if exists.
         if self.enrollmentDetails.minSatisfactoryGrade:
             del self.enrollmentDetails.minSatisfactoryGrade
