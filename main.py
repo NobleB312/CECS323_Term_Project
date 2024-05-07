@@ -20,6 +20,7 @@ from datetime import datetime
 
 '''--- Start of Miscellaneous Functions---'''
 
+
 def prompt_for_enum(prompt: str, cls, attribute_name: str):
     """
     MongoEngine attributes can be regulated with an enum.  If they are, the definition of
@@ -44,8 +45,8 @@ def prompt_for_enum(prompt: str, cls, attribute_name: str):
         raise ValueError(f'This attribute is not an enum: {attribute_name}')
 
 
-
 '''--- Start of Menu Loop Functions ---'''
+
 
 def menu_loop(menu: Menu):
     action: str = ''
@@ -54,25 +55,33 @@ def menu_loop(menu: Menu):
         print('next action: ', action)
         exec(action)
 
+
 def add():
     menu_loop(add_select)
+
 
 def select():
     menu_loop(select_select)
 
+
 def delete():
     menu_loop(delete_select)
+
 
 def update():
     menu_loop(update_select)
 
+
 def list():
     menu_loop(list_select)
+
 
 def update_enrollment_details():
     menu_loop(update_enrollment_details_select)
 
+
 '''--- Start of Select Functions ---'''
+
 
 def select_department():
     return select_general(Department)
@@ -93,8 +102,12 @@ def select_student():
 def select_section():
     return select_general(Section)
 
+
 def select_student_major():
-    success = False
+    # we need to make this one custom. Since StudentMajor is embedded in student, we can't simply use select_general(),
+    # given that embedded documents are not directly queryable. Instead, we call select_major(), then select_student(),
+    # and then we can finally traverse through the student majors to find out if that specific major exists within
+    # the student's declared majors.
     while True:
         major = select_major()
         student = select_student()
@@ -107,7 +120,9 @@ def select_student_major():
 def select_enrollment():
     return select_general(Enrollment)
 
+
 '''--- Start of Add Functions ---'''
+
 
 def add_department():
     """
@@ -138,6 +153,7 @@ def add_department():
 
         except Exception as e:
             print(e)
+
 
 def add_course():
     """
@@ -172,6 +188,7 @@ def add_course():
 
         except Exception as e:
             print(e)
+
 
 def add_section():
     """
@@ -218,6 +235,7 @@ def add_section():
         except Exception as e:
             print(e)
 
+
 def add_student():
     """
     Create a new Department instance.
@@ -241,6 +259,7 @@ def add_student():
 
         except Exception as e:
             print(e)
+
 
 def add_major():
     """
@@ -268,6 +287,7 @@ def add_major():
 
         except Exception as e:
             print(e)
+
 
 def add_enrollment():
     """
@@ -299,6 +319,7 @@ def add_enrollment():
         except Exception as e:
             print(e)
 
+
 def add_major_student():
     success = False
     while not success:
@@ -317,6 +338,8 @@ def add_major_student():
 
 
 '''--- Start of Update Enrollment Functions ---'''
+
+
 def assign_letter_grade():
     try:
         enrollment = select_enrollment()
@@ -328,6 +351,7 @@ def assign_letter_grade():
         print(f'Letter grade added. \n{enrollment}')
     except Exception as e:
         print(e)
+
 
 def update_pass_fail_application_date():
     try:
@@ -341,6 +365,7 @@ def update_pass_fail_application_date():
     except Exception as e:
         print(e)
 
+
 def update_min_satisfactory_grade():
     try:
         enrollment = select_enrollment()
@@ -352,6 +377,7 @@ def update_min_satisfactory_grade():
         print(f'Minimum satisfactory grade added. \n{enrollment}')
     except Exception as e:
         print(e)
+
 
 def update_inc_recovery_plan():
     try:
@@ -365,7 +391,9 @@ def update_inc_recovery_plan():
     except Exception as e:
         print(e)
 
+
 '''--- Start of Delete Functions ---'''
+
 
 def delete_department():
     try:
@@ -388,11 +416,12 @@ def delete_department():
     except Exception as e:
         print(e)
 
+
 def delete_course():
     try:
-        #find the course by its ID and delete it
+        # find the course by its ID and delete it
         course = select_course()
-        #first remove from the list of departments
+        # first remove from the list of departments
         course.department.remove_course(course)
         course.department.save()
 
@@ -407,6 +436,7 @@ def delete_course():
         print(f'Deleted course: \n{course}')
     except Exception as e:
         print(e)
+
 
 def delete_section():
     
@@ -423,6 +453,7 @@ def delete_section():
     except Exception as e:
         print(e)
 
+
 def delete_major():
     major = select_major()
     
@@ -433,9 +464,9 @@ def delete_major():
         students = Student.objects()
 
         for student in students:
-            for studentmajor in student.studentMajors:
-                if studentmajor.major == major:
-                    student.remove_major(studentmajor)
+            for student_major in student.studentMajors:
+                if student_major.major == major:
+                    student.remove_major(student_major)
                     student.save()
                 
         major.department.remove_major(major)
@@ -446,6 +477,7 @@ def delete_major():
     except Exception as e:
         print(e)
 
+
 def delete_student():
     student = select_student()
     
@@ -454,8 +486,8 @@ def delete_student():
         # enrollments will also CASCADE.
         # doing manual unenrollment instead like how prof brown did in one to many.
         for enrolled in student.enrollments:
-            #student.unenroll_in_section(enrolled)
-            #not necessary since student is going bye-bye.
+            # student.unenroll_in_section(enrolled)
+            # not necessary since student is going bye-bye.
             
             # we only need to fix section's references to its enrollments.
             enrolled.section.unenroll_student(enrolled)
@@ -465,6 +497,7 @@ def delete_student():
         print(f"Delete student: \n{student}")
     except Exception as e:
         print(e)
+
 
 def delete_major_student():
     try:
@@ -482,6 +515,7 @@ def delete_major_student():
     except Exception as e:
         print(e)
 
+
 def delete_enrollment():
     
     enrollment = select_enrollment()
@@ -495,40 +529,46 @@ def delete_enrollment():
         print(f"Delete enrollment: \n{enrollment}")
     except Exception as e:
         print(e)
-    
-# list section
+
 
 '''--- Start of List Functions ---'''
+
 
 def list_department():
     departments = Department.objects()
     for item in departments:
         pprint(item)
 
+
 def list_course():
     courses = Course.objects()
     for item in courses:
         pprint(item)
+
 
 def list_section():
     sections = Section.objects()
     for item in sections:
         pprint(item)
 
+
 def list_enrollment():
     enrollments = Enrollment.objects()
     for item in enrollments:
         pprint(item)
+
 
 def list_student():
     students = Student.objects()
     for item in students:
         pprint(item)
 
+
 def list_major():
     majors = Major.objects()
     for item in majors:
         pprint(item)
+
 
 def list_student_major():
     students = Student.objects()
@@ -536,7 +576,6 @@ def list_student_major():
         if student.studentMajors:
             for item in student.studentMajors:
                 pprint(item)
-
 
 
 if __name__ == '__main__':

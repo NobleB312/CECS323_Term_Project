@@ -2,6 +2,7 @@ from mongoengine import *
 from datetime import datetime
 from Department import Department
 
+
 class Major(Document):
     """
     

@@ -2,6 +2,7 @@ import mongoengine
 from mongoengine import *
 from Department import Department
 
+
 class Course(Document):
     courseNumber = IntField(db_field='course_number', min_value=100, max_value=700, required=True)
     courseName = StringField(db_field='course_name', required=True)
@@ -12,7 +13,6 @@ class Course(Document):
     departmentName = StringField(db_field='department_name')
 
     sections = ListField(ReferenceField('Section'))
-
 
     meta = {'collection': 'courses',
             'indexes': [
@@ -30,7 +30,6 @@ class Course(Document):
         self.courseName = courseName
         self.courseDescription = courseDescription
         self.courseUnits = courseUnits
-
 
     def __str__(self):
         return f'Department: {self.department.departmentName}\n'\

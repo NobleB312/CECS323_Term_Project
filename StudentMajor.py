@@ -2,6 +2,7 @@ from mongoengine import *
 from datetime import datetime
 from Major import Major
 
+
 class StudentMajor(EmbeddedDocument):
 
     major = ReferenceField(Major, required=True)
@@ -12,7 +13,6 @@ class StudentMajor(EmbeddedDocument):
     As a reference to the specific student. 
     '''
     student = ReferenceField('Student', required=True)
-
 
     # Clean method allows for declarationDate validation
     def clean(self):

@@ -23,11 +23,11 @@ class Enrollment(Document):
     '''
     SINGLE TABLE LOGIC
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    incomplete recovery plan and letter grade: Incomplete disjoint. Since these are issued at the end of a student
+    Incomplete recovery plan and letter grade: Incomplete disjoint. Since these are issued at the end of a student
     being enrolled in a course, errors should be thrown if one is already set to a value and the other is attempting
     to be added.
     
-    minimum satisfactory grade and pass fail application date: Complete disjoint. Since a student is able to change 
+    Minimum satisfactory grade and pass fail application date: Complete disjoint. Since a student is able to change 
     their status to and from pass/fail until the two week deadline, one option should delete the instance of the other. 
     '''
     # Singleton pattern. If the enrollmentDetails does not exist, create it.
@@ -89,7 +89,6 @@ class Enrollment(Document):
         super().__init__(*args, **kwargs)
         self.student = student
         self.section = section
-
 
     def __str__(self):
         return f"Enrollment:\n  Student - {self.student.firstName} {self.student.lastName}" \

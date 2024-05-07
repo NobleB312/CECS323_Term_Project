@@ -1,6 +1,7 @@
 from mongoengine import *
 from DepartmentBuilding import DepartmentBuilding
 
+
 class Department(Document):
     departmentName = StringField(db_field='department_name', required=True)
     departmentAbbreviation = StringField(db_field='department_abbreviation', max_length=6, required=True)
@@ -20,7 +21,6 @@ class Department(Document):
                 {'unique': True, 'fields': ['departmentBuilding', 'departmentOffice'], 'name': 'departments_uk_04'}
             ]}
 
-
     def __init__(self, departmentName, departmentAbbreviation, departmentChairName, departmentBuilding, departmentOffice,
                  departmentDescription, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -30,7 +30,6 @@ class Department(Document):
         self.departmentBuilding = departmentBuilding
         self.departmentOffice = departmentOffice
         self.departmentDescription = departmentDescription
-
 
     def __str__(self):
         return f'{self.departmentName} ({self.departmentAbbreviation}) Department \n'\

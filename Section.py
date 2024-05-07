@@ -6,6 +6,7 @@ from DepartmentBuilding import DepartmentBuilding
 from Schedule import Schedule
 from datetime import datetime
 
+
 class Section(Document):
     sectionNumber = IntField(db_field='section_number', required=True)
     semester = EnumField(Semester, db_field='semester', required=True)
@@ -35,7 +36,6 @@ class Section(Document):
         if hours < 8 or hours >= 20 or (hours == 19 and minutes > 30):
             raise ValidationError("Start time must be between 8am and 7:30pm")
 
-
     def __init__(self, course, sectionNumber, semester, sectionYear, building, room, schedule, startTime, instructor,
                  *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -60,7 +60,6 @@ class Section(Document):
                f"  Schedule - {self.schedule.name}\n" \
                f"  Start Time - {self.startTime.time()}\n" \
                f"  Instructor - {self.instructor}"
-
 
     def enroll_student(self, enrollment):
         if not self.enrollments:

@@ -2,23 +2,20 @@ from mongoengine import *
 from datetime import datetime
 from StudentMajor import StudentMajor
 
+
 class Student(Document):
-    """"""
     firstName = StringField(db_field='first_name', max_length=40, required=True)
     lastName = StringField(db_field='last_name', max_length=40, required=True)
     eMail = StringField(db_field='email', max_length=100, required=True)
     studentMajors = EmbeddedDocumentListField(StudentMajor, db_field='student_major')
-    
 
     enrollments = ListField(ReferenceField('Enrollment'))
-     
 
     meta = {'collection': 'students',
             'indexes': [
                 {'unique': True, 'fields': ['lastName', 'firstName'], 'name': 'students_uk_01'},
                 {'unique': True, 'fields': ['eMail'], 'name': 'students_uk_02'}
                 ]}
-
 
     def __init__(self, firstName: str, lastName: str, eMail: str, *args, **kwargs):
 

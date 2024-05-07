@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class DepartmentBuilding(Enum):
     #Building IN ('ANAC', 'CDC', 'DC', 'ECS', 'EN2', 'EN3', 'EN4', 'EN5', 'ET', 'HSCI', 'NUR','VEC')
     ANAC = 'ANAC'
