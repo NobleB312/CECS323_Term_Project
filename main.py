@@ -293,7 +293,7 @@ def add_enrollment():
             student.save()
             section.enroll_student(new_enrollment)
             section.save()
-            print(f'Successfully enrolled:\n  Student - {new_enrollment.student}\n  {new_enrollment.section}')
+            print(f'Successfully enrolled:\n{new_enrollment.student}\n{new_enrollment.section}')
             success = True
 
         except Exception as e:
