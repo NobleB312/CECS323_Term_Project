@@ -20,6 +20,7 @@ from datetime import datetime
 
 '''--- Start of Miscellaneous Functions---'''
 
+
 def prompt_for_enum(prompt: str, cls, attribute_name: str):
     """
     MongoEngine attributes can be regulated with an enum.  If they are, the definition of
@@ -44,8 +45,8 @@ def prompt_for_enum(prompt: str, cls, attribute_name: str):
         raise ValueError(f'This attribute is not an enum: {attribute_name}')
 
 
-
 '''--- Start of Menu Loop Functions ---'''
+
 
 def menu_loop(menu: Menu):
     action: str = ''
@@ -102,7 +103,10 @@ def select_section():
 
 
 def select_student_major():
-    success = False
+    # we need to make this one custom. Since StudentMajor is embedded in student, we can't simply use select_general(),
+    # given that embedded documents are not directly queryable. Instead, we call select_major(), then select_student(),
+    # and then we can finally traverse through the student majors to find out if that specific major exists within
+    # the student's declared majors.
     while True:
         major = select_major()
         student = select_student()
@@ -115,7 +119,9 @@ def select_student_major():
 def select_enrollment():
     return select_general(Enrollment)
 
+
 '''--- Start of Add Functions ---'''
+
 
 def add_department():
     """
@@ -334,6 +340,8 @@ def add_major_student():
 
 
 '''--- Start of Update Enrollment Functions ---'''
+
+
 def assign_letter_grade():
     '''
     Assigns a grade to a Student enrolled in a Course.
@@ -397,7 +405,9 @@ def update_inc_recovery_plan():
     except Exception as e:
         print(e)
 
+
 '''--- Start of Delete Functions ---'''
+
 
 def delete_department():
     '''
@@ -556,35 +566,42 @@ def delete_enrollment():
 
 '''--- Start of List Functions ---'''
 
+
 def list_department():
     departments = Department.objects()
     for item in departments:
         pprint(item)
+
 
 def list_course():
     courses = Course.objects()
     for item in courses:
         pprint(item)
 
+
 def list_section():
     sections = Section.objects()
     for item in sections:
         pprint(item)
+
 
 def list_enrollment():
     enrollments = Enrollment.objects()
     for item in enrollments:
         pprint(item)
 
+
 def list_student():
     students = Student.objects()
     for item in students:
         pprint(item)
 
+
 def list_major():
     majors = Major.objects()
     for item in majors:
         pprint(item)
+
 
 def list_student_major():
     students = Student.objects()
