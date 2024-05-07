@@ -54,23 +54,30 @@ def menu_loop(menu: Menu):
         print('next action: ', action)
         exec(action)
 
+
 def add():
     menu_loop(add_select)
+
 
 def select():
     menu_loop(select_select)
 
+
 def delete():
     menu_loop(delete_select)
+
 
 def update():
     menu_loop(update_select)
 
+
 def list():
     menu_loop(list_select)
 
+
 def update_enrollment_details():
     menu_loop(update_enrollment_details_select)
+    
 
 '''--- Start of Select Functions ---'''
 
@@ -300,6 +307,9 @@ def add_enrollment():
             print(e)
 
 def add_major_student():
+    '''
+    Assign an instance of Major to an instance of Student
+    '''
     success = False
     while not success:
         try:
