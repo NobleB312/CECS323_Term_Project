@@ -77,7 +77,7 @@ def list():
 
 def update_enrollment_details():
     menu_loop(update_enrollment_details_select)
-    
+
 
 '''--- Start of Select Functions ---'''
 
@@ -99,6 +99,7 @@ def select_student():
 
 def select_section():
     return select_general(Section)
+
 
 def select_student_major():
     success = False
@@ -146,6 +147,7 @@ def add_department():
         except Exception as e:
             print(e)
 
+
 def add_course():
     """
     Create a new Course instance.
@@ -179,6 +181,7 @@ def add_course():
 
         except Exception as e:
             print(e)
+
 
 def add_section():
     """
@@ -225,6 +228,7 @@ def add_section():
         except Exception as e:
             print(e)
 
+
 def add_student():
     """
     Create a new Department instance.
@@ -248,6 +252,7 @@ def add_student():
 
         except Exception as e:
             print(e)
+
 
 def add_major():
     """
@@ -275,6 +280,7 @@ def add_major():
 
         except Exception as e:
             print(e)
+
 
 def add_enrollment():
     """
@@ -305,6 +311,7 @@ def add_enrollment():
 
         except Exception as e:
             print(e)
+
 
 def add_major_student():
     '''
@@ -339,6 +346,7 @@ def assign_letter_grade():
     except Exception as e:
         print(e)
 
+
 def update_pass_fail_application_date():
     try:
         enrollment = select_enrollment()
@@ -351,6 +359,7 @@ def update_pass_fail_application_date():
     except Exception as e:
         print(e)
 
+
 def update_min_satisfactory_grade():
     try:
         enrollment = select_enrollment()
@@ -362,6 +371,7 @@ def update_min_satisfactory_grade():
         print(f'Minimum satisfactory grade added. \n{enrollment}')
     except Exception as e:
         print(e)
+
 
 def update_inc_recovery_plan():
     try:
@@ -378,6 +388,9 @@ def update_inc_recovery_plan():
 '''--- Start of Delete Functions ---'''
 
 def delete_department():
+    '''
+    Deletes an instance of Department
+    '''
     try:
         department = select_department()
         # delete any cascading section or studentMajor references
@@ -398,7 +411,11 @@ def delete_department():
     except Exception as e:
         print(e)
 
+
 def delete_course():
+    '''
+    Deletes an instance of Course
+    '''
     try:
         #find the course by its ID and delete it
         course = select_course()
@@ -418,8 +435,11 @@ def delete_course():
     except Exception as e:
         print(e)
 
+
 def delete_section():
-    
+    '''
+    Deletes an instance of Section
+    '''
     section = select_section()
 
     try:
@@ -433,7 +453,11 @@ def delete_section():
     except Exception as e:
         print(e)
 
+
 def delete_major():
+    '''
+    Deletes an instance of Major
+    '''
     major = select_major()
     
     try:
@@ -456,7 +480,11 @@ def delete_major():
     except Exception as e:
         print(e)
 
+
 def delete_student():
+    '''
+    Deletes and instance of Student
+    '''
     student = select_student()
     
     try:
@@ -476,7 +504,11 @@ def delete_student():
     except Exception as e:
         print(e)
 
+
 def delete_major_student():
+    '''
+    Removes the assigned Major from a Student
+    '''
     try:
         student = select_student()
         student_majors = student.studentMajors
@@ -492,8 +524,11 @@ def delete_major_student():
     except Exception as e:
         print(e)
 
+
 def delete_enrollment():
-    
+    '''
+    Removes a Student from a Course
+    '''
     enrollment = select_enrollment()
     
     try:
@@ -506,7 +541,6 @@ def delete_enrollment():
     except Exception as e:
         print(e)
     
-# list section
 
 '''--- Start of List Functions ---'''
 
@@ -546,7 +580,6 @@ def list_student_major():
         if student.studentMajors:
             for item in student.studentMajors:
                 pprint(item)
-
 
 
 if __name__ == '__main__':
