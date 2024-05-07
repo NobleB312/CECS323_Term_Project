@@ -370,7 +370,20 @@ def update_inc_recovery_plan():
 def delete_department():
     try:
         department = select_department()
+        # delete any cascading section or studentMajor references
+        students = Student.objects()
+        for student in students:
+            for enrollment in student.enrollments:
+                if enrollment.section.course.department == department:
+                    student.unenroll_in_section(enrollment)
+
+            for student_major in student.studentMajors:
+                if student_major.major.department == department:
+                    student.remove_major(student_major)
+                    student.save()
+
         department.delete()
+
         print(f'Deleted department: \n{department}')
     except Exception as e:
         print(e)
@@ -382,6 +395,14 @@ def delete_course():
         #first remove from the list of departments
         course.department.remove_course(course)
         course.department.save()
+
+        # delete any cascading section reference
+        students = Student.objects()
+        for student in students:
+            for enrollment in student.enrollments:
+                if enrollment.section.course == course:
+                    student.unenroll_in_section(enrollment)
+
         course.delete()
         print(f'Deleted course: \n{course}')
     except Exception as e:
@@ -395,7 +416,6 @@ def delete_section():
         section.course.remove_section(section)
         section.course.save()
         for enrolled in section.enrollments:
-
             enrolled.student.unenroll_in_section(enrolled)
             enrolled.student.save()
         section.delete()
