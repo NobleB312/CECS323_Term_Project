@@ -47,7 +47,7 @@ class Student(Document):
             if student_major == existing_major:
                 raise Exception('Major is already declared.')
 
-        self.studentMajors.append(major)
+        self.studentMajors.append(student_major)
 
     def remove_major(self, student_major):
         """
