@@ -343,7 +343,7 @@ def update_pass_fail_application_date():
     try:
         enrollment = select_enrollment()
 
-        pass_fail_application_date = datetime.now()
+        pass_fail_application_date = datetime.now().date()
         enrollment.add_pass_fail_application_date(pass_fail_application_date)
         enrollment.save()
         print(f'Pass/Fail grading applied. \n{enrollment}')

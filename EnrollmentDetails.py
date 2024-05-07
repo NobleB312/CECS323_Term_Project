@@ -14,7 +14,7 @@ class EnrollmentDetails(EmbeddedDocument):
     # don't allow Pass/Fail application date to be in the future
     def clean(self):
         if self.passFailApplicationDate:
-            if self.passFailApplicationDate > datetime.now():
+            if self.passFailApplicationDate > datetime.now().date():
                 raise ValidationError("Pass/Fail application date cannot be in the future")
 
     # The student defaults to having a minimum satisfactory grade. They can change to Pass/Fail later.
