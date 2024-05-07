@@ -332,7 +332,7 @@ def assign_letter_grade():
 def update_pass_fail_application_date():
     try:
         enrollment = select_enrollment()
-
+        # we can make pass fail application date set to today, given that we wanted to apply today.
         pass_fail_application_date = datetime.now().date()
         enrollment.add_pass_fail_application_date(pass_fail_application_date)
         enrollment.save()
