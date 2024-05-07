@@ -9,7 +9,6 @@ class Major(Document):
     majorName = StringField(db_field='major_name',max_length=20,required=True)
     majorDescription = StringField(db_field='major_description',max_length=800,required=True)
     
-    ## FIXME: reference to Department ##
     department = ReferenceField(Department, required=True, reverse_delete_rule=CASCADE)
 
     meta = {'collection': 'majors',

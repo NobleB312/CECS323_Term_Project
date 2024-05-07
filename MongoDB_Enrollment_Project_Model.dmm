@@ -25,7 +25,7 @@
 				},
 				{
 					"id": "a523a5e5-3f3e-4a43-8ea0-aa80bc18a122",
-					"name": "name",
+					"name": "department_name",
 					"datatype": "string",
 					"param": "",
 					"pk": false,
@@ -41,7 +41,7 @@
 				},
 				{
 					"id": "602e8021-b7cf-4cfc-9cc7-fc692d3d7a0c",
-					"name": "abbreviation",
+					"name": "department_abbreviation",
 					"datatype": "string",
 					"param": "",
 					"pk": false,
@@ -57,7 +57,7 @@
 				},
 				{
 					"id": "b4242db6-3b67-47fd-a07d-7265aa2cf65f",
-					"name": "chair_name",
+					"name": "department_chair_name",
 					"datatype": "string",
 					"param": "",
 					"pk": false,
@@ -73,8 +73,8 @@
 				},
 				{
 					"id": "fade7ae2-959b-490a-b61f-4dfa38ca35b8",
-					"name": "building",
-					"datatype": "string",
+					"name": "department_building",
+					"datatype": "enum",
 					"param": "",
 					"pk": false,
 					"nn": true,
@@ -89,7 +89,7 @@
 				},
 				{
 					"id": "cb168915-66ba-4e6b-ac9b-9d16419da0e9",
-					"name": "office",
+					"name": "department_office",
 					"datatype": "int",
 					"param": "",
 					"pk": false,
@@ -105,7 +105,7 @@
 				},
 				{
 					"id": "be6229f1-b560-4ad8-b741-b2c5948494e7",
-					"name": "description",
+					"name": "department_description",
 					"datatype": "string",
 					"param": "",
 					"pk": false,
@@ -173,7 +173,64 @@
 					]
 				}
 			],
-			"indexes": [],
+			"indexes": [
+				{
+					"id": "266affd1-0091-4ede-aed4-174ae983eaa9",
+					"name": "departments_uk_01",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"departments_uk_01\"\n}",
+						"fields": "{\n\"department_name\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "c566c2f8-0140-4f94-91ef-c7dc36620a25",
+					"name": "departments_uk_02",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"departments_uk_02\"\n}",
+						"fields": "{\n\"department_abbreviation\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "b3c70053-869b-46f8-9e33-6dba0d15752f",
+					"name": "departments_uk_03",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"departments_uk_03\"\n}",
+						"fields": "{\n\"department_chair_name\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "3024b4c1-5614-4fc9-b7bb-086ea8e97dfe",
+					"name": "departments_uk_04",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"departments_uk_04\"\n}",
+						"fields": "{\n\"department_building\": 1,\n\"department_office\": 1\n}"
+					},
+					"cols": []
+				}
+			],
 			"embeddable": false,
 			"generate": true,
 			"generateCustomCode": true,
@@ -231,7 +288,7 @@
 				},
 				{
 					"id": "1f6637b9-be05-4caa-8d1f-7b2f8dc19e53",
-					"name": "name",
+					"name": "major_name",
 					"datatype": "string",
 					"param": "",
 					"pk": false,
@@ -247,7 +304,7 @@
 				},
 				{
 					"id": "e40bbf33-0666-45e2-8a30-0200459be1e8",
-					"name": "description",
+					"name": "major_description",
 					"datatype": "string",
 					"param": "",
 					"pk": false,
@@ -282,7 +339,22 @@
 					]
 				}
 			],
-			"indexes": [],
+			"indexes": [
+				{
+					"id": "d4b340a3-1def-44a5-b867-781923cabe67",
+					"name": "majors_uk_01",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"majors_uk_01\"\n}",
+						"fields": "{\n\"major_name\": 1\n}"
+					},
+					"cols": []
+				}
+			],
 			"embeddable": false,
 			"generate": true,
 			"generateCustomCode": true,
@@ -421,7 +493,36 @@
 					]
 				}
 			],
-			"indexes": [],
+			"indexes": [
+				{
+					"id": "16d4d37d-65ec-4ebe-8712-0b1a15bcbac7",
+					"name": "students_uk_01",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"students_uk_01\"\n}",
+						"fields": "{\n\"last_name\": 1,\n\"first_name\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "8100841e-098f-4256-ae46-65dfc881997a",
+					"name": "students_uk_02",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"students_uk_02\"\n}",
+						"fields": "{\n\"email\": 1\n}"
+					},
+					"cols": []
+				}
+			],
 			"embeddable": false,
 			"generate": true,
 			"generateCustomCode": true,
@@ -476,6 +577,22 @@
 					"estimatedSize": "",
 					"any": "",
 					"fk": true
+				},
+				{
+					"id": "f5dd090f-c2b9-4134-a979-dafabf5cd1cd",
+					"name": "department_name",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
 				},
 				{
 					"id": "29293ca7-3bc1-4b1e-9777-86e8b6e09d5f",
@@ -579,7 +696,36 @@
 					]
 				}
 			],
-			"indexes": [],
+			"indexes": [
+				{
+					"id": "d5f942e1-7993-49dd-99b6-e14c6e314740",
+					"name": "courses_uk_01",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"courses_uk_01\"\n}",
+						"fields": "{\n\"department_name\": 1,\n\"course_number\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "726457b7-0caa-4945-b6ca-8c0b8a4d7b49",
+					"name": "courses_uk_02",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"courses_uk_02\"\n}",
+						"fields": "{\n\"department_name\": 1,\n\"course_name\": 1\n}"
+					},
+					"cols": []
+				}
+			],
 			"embeddable": false,
 			"generate": true,
 			"generateCustomCode": true,
@@ -654,7 +800,7 @@
 				{
 					"id": "e46a5210-7149-4246-808b-1ccac604bebf",
 					"name": "semester",
-					"datatype": "string",
+					"datatype": "enum",
 					"param": "",
 					"pk": false,
 					"nn": true,
@@ -686,7 +832,7 @@
 				{
 					"id": "cf0b8107-ce6b-4658-a268-8d9dcb706422",
 					"name": "building",
-					"datatype": "string",
+					"datatype": "enum",
 					"param": "",
 					"pk": false,
 					"nn": true,
@@ -718,7 +864,7 @@
 				{
 					"id": "e8429465-88a1-40a2-be35-f3f4baa9cfca",
 					"name": "schedule",
-					"datatype": "string",
+					"datatype": "enum",
 					"param": "",
 					"pk": false,
 					"nn": true,
@@ -801,7 +947,50 @@
 					]
 				}
 			],
-			"indexes": [],
+			"indexes": [
+				{
+					"id": "ac9025cd-c7f2-4f9d-882f-a7d5fb6136d8",
+					"name": "sections_uk_01",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"sections_uk_01\"\n}",
+						"fields": "{\n\"course\": 1,\n\"section_number\": 1,\n\"semester\": 1,\n\"section_year\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "ac1846bc-0b45-47de-b9f9-9309191f4a5c",
+					"name": "sections_uk_02",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"sections_uk_02\"\n}",
+						"fields": "{\n\"semester\": 1,\n\"section_year\": 1,\n\"building\": 1,\n\"room\": 1,\n\"schedule\": 1,\n\"start_time\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "2a12867a-f71f-4d31-9ab8-c592fe7de187",
+					"name": "sections_uk_03",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"sections_uk_03\"\n}",
+						"fields": "{\n\"semester\": 1,\n\"section_year\": 1,\n\"schedule\": 1,\n\"start_time\": 1,\n\"instructor\": 1\n}"
+					},
+					"cols": []
+				}
+			],
 			"embeddable": false,
 			"generate": true,
 			"generateCustomCode": true,
@@ -842,7 +1031,7 @@
 				},
 				{
 					"id": "c8eb6438-8a04-4b98-9b61-5de8b41b2aec",
-					"name": "students",
+					"name": "student",
 					"datatype": "objectId",
 					"param": "",
 					"pk": false,
@@ -889,6 +1078,70 @@
 					"pattern": false,
 					"estimatedSize": "",
 					"any": ""
+				},
+				{
+					"id": "4bb22b97-b9cc-417e-af98-78f8a78606d9",
+					"name": "semester",
+					"datatype": "enum",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
+				},
+				{
+					"id": "0f3c8446-ee36-4009-91e8-41a14d9e4b6c",
+					"name": "section_year",
+					"datatype": "int",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
+				},
+				{
+					"id": "1f77e6b0-cdb7-4622-9492-cc82ca484dc0",
+					"name": "department_abbreviation",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
+				},
+				{
+					"id": "fc142af0-134a-4787-9f68-1f54bbdf8ec4",
+					"name": "course_number",
+					"datatype": "int",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
 				}
 			],
 			"relations": [
@@ -912,7 +1165,36 @@
 					]
 				}
 			],
-			"indexes": [],
+			"indexes": [
+				{
+					"id": "854d31c5-9d97-4304-8b53-3735a8a78d48",
+					"name": "enrollments_uk_01",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"enrollments_uk_01\"\n}",
+						"fields": "{\n\"student\": 1,\n\"section\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "c55dce26-7420-44ba-a203-e6b90efd0d23",
+					"name": "enrollments_uk_02",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"enrollments_uk_02\"\n}",
+						"fields": "{\n\"semester\": 1,\n\"section_year\": 1,\n\"department_abbreviation\": 1,\n\"course_number\": 1,\n\"student\": 1\n}"
+					},
+					"cols": []
+				}
+			],
 			"embeddable": false,
 			"generate": true,
 			"generateCustomCode": true,
@@ -938,7 +1220,7 @@
 				{
 					"id": "8cc50333-1fda-4bc5-bc9b-163088e0f03e",
 					"name": "letter_grade",
-					"datatype": "string",
+					"datatype": "enum",
 					"param": "",
 					"pk": false,
 					"nn": false,
@@ -970,7 +1252,7 @@
 				{
 					"id": "dc12efc3-e186-4139-ae70-3d25b9fd9f4a",
 					"name": "min_satisfactory_grade",
-					"datatype": "string",
+					"datatype": "enum",
 					"param": "",
 					"pk": false,
 					"nn": false,
@@ -1038,7 +1320,7 @@
 					"name": "major",
 					"datatype": "objectId",
 					"param": "",
-					"pk": false,
+					"pk": true,
 					"nn": true,
 					"list": false,
 					"comment": "",
@@ -1065,6 +1347,22 @@
 					"pattern": false,
 					"estimatedSize": "",
 					"any": ""
+				},
+				{
+					"id": "d6fdbb23-c1e5-4995-877c-1580a1a1662d",
+					"name": "student",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
 				}
 			],
 			"relations": [
@@ -1074,9 +1372,18 @@
 			"keys": [
 				{
 					"id": "01b65c54-6f3a-48cb-bdcf-b94bdb83a90c",
-					"name": "Primary key",
+					"name": "student_majors_uk_01",
 					"isPk": true,
-					"cols": []
+					"cols": [
+						{
+							"id": "0c1eb138-3554-4547-bb35-ba2851c08318",
+							"colid": "b3ee3f62-f72b-4f66-8fcb-6682d17f6aa8"
+						},
+						{
+							"id": "241304c0-f6e1-401e-8918-afa5a65a595a",
+							"colid": "d6fdbb23-c1e5-4995-877c-1580a1a1662d"
+						}
+					]
 				}
 			],
 			"indexes": [],
@@ -1387,7 +1694,7 @@
 		"def_collation": "",
 		"def_others": "",
 		"connectionVersion": "",
-		"lastSaved": 1714688744560
+		"lastSaved": 1715070761597
 	},
 	"otherObjects": {},
 	"diagrams": {
@@ -1405,10 +1712,10 @@
 			"diagramItems": {
 				"32d83d5e-a163-46e5-933e-99f393d25c9e": {
 					"referencedItemId": "32d83d5e-a163-46e5-933e-99f393d25c9e",
-					"x": 1149,
-					"y": 106,
-					"gHeight": 189,
-					"gWidth": 217,
+					"x": 1150,
+					"y": 59,
+					"gHeight": 272,
+					"gWidth": 289,
 					"color": "#ffffff",
 					"background": "#03a9f4",
 					"resized": false,
@@ -1420,8 +1727,8 @@
 					"referencedItemId": "24d8d6d4-8eec-4772-b94e-a0bbfa8e878c",
 					"x": 676,
 					"y": 412,
-					"gHeight": 99,
-					"gWidth": 226,
+					"gHeight": 128,
+					"gWidth": 248,
 					"color": "#ffffff",
 					"background": "#03a9f4",
 					"resized": false,
@@ -1432,8 +1739,8 @@
 				"4a578257-95e2-4641-8197-a5daba4f2369": {
 					"referencedItemId": "4a578257-95e2-4641-8197-a5daba4f2369",
 					"x": 225,
-					"y": 584,
-					"gHeight": 171,
+					"y": 583,
+					"gHeight": 236,
 					"gWidth": 253,
 					"color": "#ffffff",
 					"background": "#03a9f4",
@@ -1446,8 +1753,8 @@
 					"referencedItemId": "3ae4ef01-a75a-4bbf-9c04-5a2b14dea01a",
 					"x": 1152,
 					"y": 371,
-					"gHeight": 153,
-					"gWidth": 226,
+					"gHeight": 218,
+					"gWidth": 251,
 					"color": "#ffffff",
 					"background": "#03a9f4",
 					"resized": false,
@@ -1459,7 +1766,7 @@
 					"referencedItemId": "0c7a8069-37f2-4b53-8c6b-9e9b3ffce8a9",
 					"x": 1174,
 					"y": 631,
-					"gHeight": 225,
+					"gHeight": 290,
 					"gWidth": 232,
 					"color": "#ffffff",
 					"background": "#03a9f4",
@@ -1472,8 +1779,8 @@
 					"referencedItemId": "cb643cd3-fd5d-4168-9172-410b0a8cc2f7",
 					"x": 885,
 					"y": 1005,
-					"gHeight": 171,
-					"gWidth": 264,
+					"gHeight": 290,
+					"gWidth": 289,
 					"color": "#ffffff",
 					"background": "#03a9f4",
 					"resized": false,
