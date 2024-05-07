@@ -20,7 +20,6 @@ from datetime import datetime
 
 '''--- Start of Miscellaneous Functions---'''
 
-
 def prompt_for_enum(prompt: str, cls, attribute_name: str):
     """
     MongoEngine attributes can be regulated with an enum.  If they are, the definition of
@@ -45,8 +44,8 @@ def prompt_for_enum(prompt: str, cls, attribute_name: str):
         raise ValueError(f'This attribute is not an enum: {attribute_name}')
 
 
-'''--- Start of Menu Loop Functions ---'''
 
+'''--- Start of Menu Loop Functions ---'''
 
 def menu_loop(menu: Menu):
     action: str = ''
@@ -82,7 +81,6 @@ def update_enrollment_details():
 
 '''--- Start of Select Functions ---'''
 
-
 def select_department():
     return select_general(Department)
 
@@ -104,10 +102,7 @@ def select_section():
 
 
 def select_student_major():
-    # we need to make this one custom. Since StudentMajor is embedded in student, we can't simply use select_general(),
-    # given that embedded documents are not directly queryable. Instead, we call select_major(), then select_student(),
-    # and then we can finally traverse through the student majors to find out if that specific major exists within
-    # the student's declared majors.
+    success = False
     while True:
         major = select_major()
         student = select_student()
@@ -120,9 +115,7 @@ def select_student_major():
 def select_enrollment():
     return select_general(Enrollment)
 
-
 '''--- Start of Add Functions ---'''
-
 
 def add_department():
     """
@@ -321,6 +314,9 @@ def add_enrollment():
 
 
 def add_major_student():
+    '''
+    Assign an instance of Major to an instance of Student.
+    '''
     success = False
     while not success:
         try:
@@ -338,9 +334,10 @@ def add_major_student():
 
 
 '''--- Start of Update Enrollment Functions ---'''
-
-
 def assign_letter_grade():
+    '''
+    Assigns a grade to a Student enrolled in a Course.
+    '''
     try:
         enrollment = select_enrollment()
 
@@ -354,9 +351,12 @@ def assign_letter_grade():
 
 
 def update_pass_fail_application_date():
+    '''
+    Updates Pass/Fail status.
+    '''
     try:
         enrollment = select_enrollment()
-        # we can make pass fail application date set to today, given that we wanted to apply today.
+
         pass_fail_application_date = datetime.now().date()
         enrollment.add_pass_fail_application_date(pass_fail_application_date)
         enrollment.save()
@@ -367,6 +367,9 @@ def update_pass_fail_application_date():
 
 
 def update_min_satisfactory_grade():
+    '''
+    Update to change minimum statifactory grade to pass a course.
+    '''
     try:
         enrollment = select_enrollment()
 
@@ -380,6 +383,9 @@ def update_min_satisfactory_grade():
 
 
 def update_inc_recovery_plan():
+    '''
+    Updates Incomplete recovery plan.
+    '''
     try:
         enrollment = select_enrollment()
 
@@ -391,11 +397,12 @@ def update_inc_recovery_plan():
     except Exception as e:
         print(e)
 
-
 '''--- Start of Delete Functions ---'''
 
-
 def delete_department():
+    '''
+    Deletes an instance of Department.
+    '''
     try:
         department = select_department()
         # delete any cascading section or studentMajor references
@@ -418,10 +425,13 @@ def delete_department():
 
 
 def delete_course():
+    '''
+    Deletes an instance of Course.
+    '''
     try:
-        # find the course by its ID and delete it
+        #find the course by its ID and delete it
         course = select_course()
-        # first remove from the list of departments
+        #first remove from the list of departments
         course.department.remove_course(course)
         course.department.save()
 
@@ -439,7 +449,9 @@ def delete_course():
 
 
 def delete_section():
-    
+    '''
+    Deletes an instance of Section.
+    '''
     section = select_section()
 
     try:
@@ -455,6 +467,9 @@ def delete_section():
 
 
 def delete_major():
+    '''
+    Deletes an instance of Major.
+    '''
     major = select_major()
     
     try:
@@ -464,9 +479,9 @@ def delete_major():
         students = Student.objects()
 
         for student in students:
-            for student_major in student.studentMajors:
-                if student_major.major == major:
-                    student.remove_major(student_major)
+            for studentmajor in student.studentMajors:
+                if studentmajor.major == major:
+                    student.remove_major(studentmajor)
                     student.save()
                 
         major.department.remove_major(major)
@@ -479,6 +494,9 @@ def delete_major():
 
 
 def delete_student():
+    '''
+    Deletes and instance of Student.
+    '''
     student = select_student()
     
     try:
@@ -486,8 +504,8 @@ def delete_student():
         # enrollments will also CASCADE.
         # doing manual unenrollment instead like how prof brown did in one to many.
         for enrolled in student.enrollments:
-            # student.unenroll_in_section(enrolled)
-            # not necessary since student is going bye-bye.
+            #student.unenroll_in_section(enrolled)
+            #not necessary since student is going bye-bye.
             
             # we only need to fix section's references to its enrollments.
             enrolled.section.unenroll_student(enrolled)
@@ -500,6 +518,9 @@ def delete_student():
 
 
 def delete_major_student():
+    '''
+    Removes the assigned Major from a Student.
+    '''
     try:
         student = select_student()
         student_majors = student.studentMajors
@@ -517,7 +538,9 @@ def delete_major_student():
 
 
 def delete_enrollment():
-    
+    '''
+    Removes a Student from a Course.
+    '''
     enrollment = select_enrollment()
     
     try:
@@ -529,46 +552,39 @@ def delete_enrollment():
         print(f"Delete enrollment: \n{enrollment}")
     except Exception as e:
         print(e)
-
+    
 
 '''--- Start of List Functions ---'''
-
 
 def list_department():
     departments = Department.objects()
     for item in departments:
         pprint(item)
 
-
 def list_course():
     courses = Course.objects()
     for item in courses:
         pprint(item)
-
 
 def list_section():
     sections = Section.objects()
     for item in sections:
         pprint(item)
 
-
 def list_enrollment():
     enrollments = Enrollment.objects()
     for item in enrollments:
         pprint(item)
-
 
 def list_student():
     students = Student.objects()
     for item in students:
         pprint(item)
 
-
 def list_major():
     majors = Major.objects()
     for item in majors:
         pprint(item)
-
 
 def list_student_major():
     students = Student.objects()
