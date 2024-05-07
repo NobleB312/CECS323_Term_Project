@@ -315,7 +315,7 @@ def add_enrollment():
 
 def add_major_student():
     '''
-    Assign an instance of Major to an instance of Student
+    Assign an instance of Major to an instance of Student.
     '''
     success = False
     while not success:
@@ -335,6 +335,9 @@ def add_major_student():
 
 '''--- Start of Update Enrollment Functions ---'''
 def assign_letter_grade():
+    '''
+    Assigns a grade to a Student enrolled in a Course.
+    '''
     try:
         enrollment = select_enrollment()
 
@@ -348,6 +351,9 @@ def assign_letter_grade():
 
 
 def update_pass_fail_application_date():
+    '''
+    Updates Pass/Fail status.
+    '''
     try:
         enrollment = select_enrollment()
 
@@ -361,6 +367,9 @@ def update_pass_fail_application_date():
 
 
 def update_min_satisfactory_grade():
+    '''
+    Update to change minimum statifactory grade to pass a course.
+    '''
     try:
         enrollment = select_enrollment()
 
@@ -374,6 +383,9 @@ def update_min_satisfactory_grade():
 
 
 def update_inc_recovery_plan():
+    '''
+    Updates Incomplete recovery plan.
+    '''
     try:
         enrollment = select_enrollment()
 
@@ -389,7 +401,7 @@ def update_inc_recovery_plan():
 
 def delete_department():
     '''
-    Deletes an instance of Department
+    Deletes an instance of Department.
     '''
     try:
         department = select_department()
@@ -414,7 +426,7 @@ def delete_department():
 
 def delete_course():
     '''
-    Deletes an instance of Course
+    Deletes an instance of Course.
     '''
     try:
         #find the course by its ID and delete it
@@ -438,7 +450,7 @@ def delete_course():
 
 def delete_section():
     '''
-    Deletes an instance of Section
+    Deletes an instance of Section.
     '''
     section = select_section()
 
@@ -456,7 +468,7 @@ def delete_section():
 
 def delete_major():
     '''
-    Deletes an instance of Major
+    Deletes an instance of Major.
     '''
     major = select_major()
     
@@ -483,7 +495,7 @@ def delete_major():
 
 def delete_student():
     '''
-    Deletes and instance of Student
+    Deletes and instance of Student.
     '''
     student = select_student()
     
@@ -507,7 +519,7 @@ def delete_student():
 
 def delete_major_student():
     '''
-    Removes the assigned Major from a Student
+    Removes the assigned Major from a Student.
     '''
     try:
         student = select_student()
@@ -527,7 +539,7 @@ def delete_major_student():
 
 def delete_enrollment():
     '''
-    Removes a Student from a Course
+    Removes a Student from a Course.
     '''
     enrollment = select_enrollment()
     
